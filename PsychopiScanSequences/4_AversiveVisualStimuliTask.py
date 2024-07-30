@@ -152,7 +152,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version='',
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='/Users/sbasodi1/GSU Dropbox Dropbox/Sunitha Basodi/9. CABI Grant Sahajayoga/8.DataCollection/exp-1/CABI_SYM_exp_with_ports_and_counter_balancing.py',
+        originPath='./data/SYM_CABI_AversiveVisualStimuliTask_lastrun.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='time'
     )
