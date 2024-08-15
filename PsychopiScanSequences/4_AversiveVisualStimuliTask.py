@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Thu Jul 11 13:16:20 2024
+    on Thu Aug  1 11:44:48 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -18,7 +18,7 @@ from psychopy import plugins
 plugins.activatePlugins()
 prefs.hardware['audioLib'] = 'ptb'
 prefs.hardware['audioLatencyMode'] = '3'
-from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout, hardware#, parallel
+from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout, hardware
 from psychopy.tools import environmenttools
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER, priority)
@@ -37,9 +37,6 @@ from psychopy.hardware import keyboard
 import numpy as np
 import random
 
-import time
-from psychopy.hardware import brainproducts
-
 high_imgs_order=np.random.permutation(18).reshape((6,3)).tolist()
 
 low_imgs_order=np.random.permutation(18).reshape((6,3)).tolist()
@@ -54,6 +51,9 @@ low_nReps = 0
 if blocks[0] == 'L':
     high_nReps = 0
     low_nReps = 1
+    
+def task_trigger(value, desc=""):
+    print(value)
 # --- Setup global variables (available in all functions) ---
 # create a device manager to handle hardware (keyboards, mice, mirophones, speakers, etc.)
 deviceManager = hardware.DeviceManager()
@@ -152,7 +152,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version='',
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='./data/SYM_CABI_AversiveVisualStimuliTask_lastrun.py',
+        originPath='./data/4_AversiveVisualStimuliTaskUpdatedWithTriggerPrints_lastrun.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='time'
     )
@@ -275,21 +275,6 @@ def setupDevices(expInfo, thisExp, win):
     # return True if completed successfully
     return True
 
-def setupBrainProductsRCS(expName, workspace, participant):
-    # Host, (Port), Timeout, (Testmode)
-    rcs = brainproducts.RemoteControlServer(host='143.215.238.204',timeout=20)
-    rcs.open(expName, workspace=workspace,participant=participant)
-
-    # Open BrainVision Recorder with the previously entered settings
-    rcs.openRecorder()
-    time.sleep(2)
-
-    rcs.mode = 'monitor' 
-    print(rcs.recordingState)
-    time.sleep(2)
-
-    return rcs
-    
 def pauseExperiment(thisExp, win=None, timers=[], playbackComponents=[]):
     """
     Pause this experiment, preventing the flow from advancing to the next routine until resumed.
@@ -388,16 +373,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # Start Code - component code to be run after the window creation
     
-    # --- Initialize components for Routine "help_guide" ---
-    help_text = visual.TextStim(win=win, name='help_text',
-        text='Please empathize with the pictures shown until the next picture appears. \n\nWhen the fixation cross appears in the middle of the screen, focus on it (no need to empathize). ',
-        font='Arial',
-        pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=0.0);
-    
-    # --- Initialize components for Routine "counter_balance_code" ---
+    # --- Initialize components for Routine "dummy_test" ---
     # Run 'Begin Experiment' code from code_2
     global high_nReps
     global low_nReps
@@ -411,14 +387,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
-    high_blank_image = visual.ImageStim(
+    
+    # --- Initialize components for Routine "high_blank" ---
+    high_blank_img = visual.ImageStim(
         win=win,
-        name='high_blank_image', 
+        name='high_blank_img', 
         image='images/blank_screen.png', mask=None, anchor='center',
         ori=0.0, pos=(0, 0), size=(1, 1),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-1.0)
+        texRes=128.0, interpolate=True, depth=0.0)
     
     # --- Initialize components for Routine "high_fixation_cross" ---
     high_fixation_img = visual.ImageStim(
@@ -439,14 +417,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
-    low_blank_img = visual.ImageStim(
+    
+    # --- Initialize components for Routine "low_blank" ---
+    low_blank_image = visual.ImageStim(
         win=win,
-        name='low_blank_img', 
+        name='low_blank_image', 
         image='images/blank_screen.png', mask=None, anchor='center',
         ori=0.0, pos=(0, 0), size=(1, 1),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-1.0)
+        texRes=128.0, interpolate=True, depth=0.0)
     
     # --- Initialize components for Routine "low_fixation_cross" ---
     low_fixation_img = visual.ImageStim(
@@ -486,101 +466,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         format='%Y-%m-%d %Hh%M.%S.%f %z', fractionalSecondDigits=6
     )
     
-    # --- Prepare to start Routine "help_guide" ---
-    continueRoutine = True
-    # update component parameters for each repeat
-    thisExp.addData('help_guide.started', globalClock.getTime(format='float'))
-    # keep track of which components have finished
-    help_guideComponents = [help_text]
-    for thisComponent in help_guideComponents:
-        thisComponent.tStart = None
-        thisComponent.tStop = None
-        thisComponent.tStartRefresh = None
-        thisComponent.tStopRefresh = None
-        if hasattr(thisComponent, 'status'):
-            thisComponent.status = NOT_STARTED
-    # reset timers
-    t = 0
-    _timeToFirstFrame = win.getFutureFlipTime(clock="now")
-    frameN = -1
-    
-    # --- Run Routine "help_guide" ---
-    routineForceEnded = not continueRoutine
-    while continueRoutine and routineTimer.getTime() < 10.0:
-        # get current time
-        t = routineTimer.getTime()
-        tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-        # update/draw components on each frame
-        
-        # *help_text* updates
-        
-        # if help_text is starting this frame...
-        if help_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-            # keep track of start time/frame for later
-            help_text.frameNStart = frameN  # exact frame index
-            help_text.tStart = t  # local t and not account for scr refresh
-            help_text.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(help_text, 'tStartRefresh')  # time at next scr refresh
-            # add timestamp to datafile
-            thisExp.timestampOnFlip(win, 'help_text.started')
-            # update status
-            help_text.status = STARTED
-            help_text.setAutoDraw(True)
-        
-        # if help_text is active this frame...
-        if help_text.status == STARTED:
-            # update params
-            pass
-        
-        # if help_text is stopping this frame...
-        if help_text.status == STARTED:
-            # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > help_text.tStartRefresh + 10-frameTolerance:
-                # keep track of stop time/frame for later
-                help_text.tStop = t  # not accounting for scr refresh
-                help_text.tStopRefresh = tThisFlipGlobal  # on global time
-                help_text.frameNStop = frameN  # exact frame index
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'help_text.stopped')
-                # update status
-                help_text.status = FINISHED
-                help_text.setAutoDraw(False)
-        
-        # check for quit (typically the Esc key)
-        if defaultKeyboard.getKeys(keyList=["escape"]):
-            thisExp.status = FINISHED
-        if thisExp.status == FINISHED or endExpNow:
-            endExperiment(thisExp, win=win)
-            return
-        
-        # check if all components have finished
-        if not continueRoutine:  # a component has requested a forced-end of Routine
-            routineForceEnded = True
-            break
-        continueRoutine = False  # will revert to True if at least one component still running
-        for thisComponent in help_guideComponents:
-            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                continueRoutine = True
-                break  # at least one component has not yet finished
-        
-        # refresh the screen
-        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-            win.flip()
-    
-    # --- Ending Routine "help_guide" ---
-    for thisComponent in help_guideComponents:
-        if hasattr(thisComponent, "setAutoDraw"):
-            thisComponent.setAutoDraw(False)
-    thisExp.addData('help_guide.stopped', globalClock.getTime(format='float'))
-    # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
-    if routineForceEnded:
-        routineTimer.reset()
-    else:
-        routineTimer.addTime(-10.000000)
-    thisExp.nextEntry()
-    
     # set up handler to look after randomisation of conditions etc
     block_repeat = data.TrialHandler(nReps=12.0, method='sequential', 
         extraInfo=expInfo, originPath=-1,
@@ -609,10 +494,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             for paramName in thisBlock_repeat:
                 globals()[paramName] = thisBlock_repeat[paramName]
         
-        # --- Prepare to start Routine "counter_balance_code" ---
+        # --- Prepare to start Routine "dummy_test" ---
         continueRoutine = True
         # update component parameters for each repeat
-        thisExp.addData('counter_balance_code.started', globalClock.getTime(format='float'))
+        thisExp.addData('dummy_test.started', globalClock.getTime(format='float'))
         # Run 'Begin Routine' code from code_2
         if blocks[block_repeat.thisN] == 'H':
             high_nReps = 1
@@ -624,8 +509,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             raise Exception ('Invalid block ID. It should be either "H" or "L"')
         
         # keep track of which components have finished
-        counter_balance_codeComponents = []
-        for thisComponent in counter_balance_codeComponents:
+        dummy_testComponents = []
+        for thisComponent in dummy_testComponents:
             thisComponent.tStart = None
             thisComponent.tStop = None
             thisComponent.tStartRefresh = None
@@ -637,7 +522,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         _timeToFirstFrame = win.getFutureFlipTime(clock="now")
         frameN = -1
         
-        # --- Run Routine "counter_balance_code" ---
+        # --- Run Routine "dummy_test" ---
         routineForceEnded = not continueRoutine
         while continueRoutine:
             # get current time
@@ -659,7 +544,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 routineForceEnded = True
                 break
             continueRoutine = False  # will revert to True if at least one component still running
-            for thisComponent in counter_balance_codeComponents:
+            for thisComponent in dummy_testComponents:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
                     break  # at least one component has not yet finished
@@ -668,12 +553,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                 win.flip()
         
-        # --- Ending Routine "counter_balance_code" ---
-        for thisComponent in counter_balance_codeComponents:
+        # --- Ending Routine "dummy_test" ---
+        for thisComponent in dummy_testComponents:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
-        thisExp.addData('counter_balance_code.stopped', globalClock.getTime(format='float'))
-        # the Routine "counter_balance_code" was not non-slip safe, so reset the non-slip timer
+        thisExp.addData('dummy_test.stopped', globalClock.getTime(format='float'))
+        # the Routine "dummy_test" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
         # set up handler to look after randomisation of conditions etc
@@ -737,8 +622,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # update component parameters for each repeat
                 thisExp.addData('high_val_imgs.started', globalClock.getTime(format='float'))
                 high_val_img.setImage(image_file)
+                # Run 'Begin Routine' code from code
+                ### START ROUTINE SBASODI1 (HIGH)
+                task_trigger(value="1", desc="High Valence Image")
+                ### END OF START ROUTINE CODE SBASODI1 (HIGH)
                 # keep track of which components have finished
-                high_val_imgsComponents = [high_val_img, high_blank_image]
+                high_val_imgsComponents = [high_val_img]
                 for thisComponent in high_val_imgsComponents:
                     thisComponent.tStart = None
                     thisComponent.tStop = None
@@ -753,7 +642,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 
                 # --- Run Routine "high_val_imgs" ---
                 routineForceEnded = not continueRoutine
-                while continueRoutine and routineTimer.getTime() < 9.0:
+                while continueRoutine and routineTimer.getTime() < 6.0:
                     # get current time
                     t = routineTimer.getTime()
                     tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -795,40 +684,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                             high_val_img.status = FINISHED
                             high_val_img.setAutoDraw(False)
                     
-                    # *high_blank_image* updates
-                    
-                    # if high_blank_image is starting this frame...
-                    if high_blank_image.status == NOT_STARTED and tThisFlip >= 6-frameTolerance:
-                        # keep track of start time/frame for later
-                        high_blank_image.frameNStart = frameN  # exact frame index
-                        high_blank_image.tStart = t  # local t and not account for scr refresh
-                        high_blank_image.tStartRefresh = tThisFlipGlobal  # on global time
-                        win.timeOnFlip(high_blank_image, 'tStartRefresh')  # time at next scr refresh
-                        # add timestamp to datafile
-                        thisExp.timestampOnFlip(win, 'high_blank_image.started')
-                        # update status
-                        high_blank_image.status = STARTED
-                        high_blank_image.setAutoDraw(True)
-                    
-                    # if high_blank_image is active this frame...
-                    if high_blank_image.status == STARTED:
-                        # update params
-                        pass
-                    
-                    # if high_blank_image is stopping this frame...
-                    if high_blank_image.status == STARTED:
-                        # is it time to stop? (based on global clock, using actual start)
-                        if tThisFlipGlobal > high_blank_image.tStartRefresh + 3-frameTolerance:
-                            # keep track of stop time/frame for later
-                            high_blank_image.tStop = t  # not accounting for scr refresh
-                            high_blank_image.tStopRefresh = tThisFlipGlobal  # on global time
-                            high_blank_image.frameNStop = frameN  # exact frame index
-                            # add timestamp to datafile
-                            thisExp.timestampOnFlip(win, 'high_blank_image.stopped')
-                            # update status
-                            high_blank_image.status = FINISHED
-                            high_blank_image.setAutoDraw(False)
-                    
                     # check for quit (typically the Esc key)
                     if defaultKeyboard.getKeys(keyList=["escape"]):
                         thisExp.status = FINISHED
@@ -855,11 +710,110 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     if hasattr(thisComponent, "setAutoDraw"):
                         thisComponent.setAutoDraw(False)
                 thisExp.addData('high_val_imgs.stopped', globalClock.getTime(format='float'))
+                # Run 'End Routine' code from code
+                ### END ROUTINE SBASODI1 (HIGH)
+                task_trigger(value="2", desc="High Valence Image")
+                ### END OF END ROUTINE CODE SBASODI1 (HIGH)
+                
                 # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
                 if routineForceEnded:
                     routineTimer.reset()
                 else:
-                    routineTimer.addTime(-9.000000)
+                    routineTimer.addTime(-6.000000)
+                
+                # --- Prepare to start Routine "high_blank" ---
+                continueRoutine = True
+                # update component parameters for each repeat
+                thisExp.addData('high_blank.started', globalClock.getTime(format='float'))
+                # keep track of which components have finished
+                high_blankComponents = [high_blank_img]
+                for thisComponent in high_blankComponents:
+                    thisComponent.tStart = None
+                    thisComponent.tStop = None
+                    thisComponent.tStartRefresh = None
+                    thisComponent.tStopRefresh = None
+                    if hasattr(thisComponent, 'status'):
+                        thisComponent.status = NOT_STARTED
+                # reset timers
+                t = 0
+                _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+                frameN = -1
+                
+                # --- Run Routine "high_blank" ---
+                routineForceEnded = not continueRoutine
+                while continueRoutine and routineTimer.getTime() < 3.0:
+                    # get current time
+                    t = routineTimer.getTime()
+                    tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+                    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+                    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+                    # update/draw components on each frame
+                    
+                    # *high_blank_img* updates
+                    
+                    # if high_blank_img is starting this frame...
+                    if high_blank_img.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                        # keep track of start time/frame for later
+                        high_blank_img.frameNStart = frameN  # exact frame index
+                        high_blank_img.tStart = t  # local t and not account for scr refresh
+                        high_blank_img.tStartRefresh = tThisFlipGlobal  # on global time
+                        win.timeOnFlip(high_blank_img, 'tStartRefresh')  # time at next scr refresh
+                        # add timestamp to datafile
+                        thisExp.timestampOnFlip(win, 'high_blank_img.started')
+                        # update status
+                        high_blank_img.status = STARTED
+                        high_blank_img.setAutoDraw(True)
+                    
+                    # if high_blank_img is active this frame...
+                    if high_blank_img.status == STARTED:
+                        # update params
+                        pass
+                    
+                    # if high_blank_img is stopping this frame...
+                    if high_blank_img.status == STARTED:
+                        # is it time to stop? (based on global clock, using actual start)
+                        if tThisFlipGlobal > high_blank_img.tStartRefresh + 3.0-frameTolerance:
+                            # keep track of stop time/frame for later
+                            high_blank_img.tStop = t  # not accounting for scr refresh
+                            high_blank_img.tStopRefresh = tThisFlipGlobal  # on global time
+                            high_blank_img.frameNStop = frameN  # exact frame index
+                            # add timestamp to datafile
+                            thisExp.timestampOnFlip(win, 'high_blank_img.stopped')
+                            # update status
+                            high_blank_img.status = FINISHED
+                            high_blank_img.setAutoDraw(False)
+                    
+                    # check for quit (typically the Esc key)
+                    if defaultKeyboard.getKeys(keyList=["escape"]):
+                        thisExp.status = FINISHED
+                    if thisExp.status == FINISHED or endExpNow:
+                        endExperiment(thisExp, win=win)
+                        return
+                    
+                    # check if all components have finished
+                    if not continueRoutine:  # a component has requested a forced-end of Routine
+                        routineForceEnded = True
+                        break
+                    continueRoutine = False  # will revert to True if at least one component still running
+                    for thisComponent in high_blankComponents:
+                        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                            continueRoutine = True
+                            break  # at least one component has not yet finished
+                    
+                    # refresh the screen
+                    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                        win.flip()
+                
+                # --- Ending Routine "high_blank" ---
+                for thisComponent in high_blankComponents:
+                    if hasattr(thisComponent, "setAutoDraw"):
+                        thisComponent.setAutoDraw(False)
+                thisExp.addData('high_blank.stopped', globalClock.getTime(format='float'))
+                # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+                if routineForceEnded:
+                    routineTimer.reset()
+                else:
+                    routineTimer.addTime(-3.000000)
                 thisExp.nextEntry()
                 
                 if thisSession is not None:
@@ -872,6 +826,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             continueRoutine = True
             # update component parameters for each repeat
             thisExp.addData('high_fixation_cross.started', globalClock.getTime(format='float'))
+            # Run 'Begin Routine' code from code_4
+            ### START ROUTINE SBASODI1 (HIGH_FIXATION)
+            task_trigger(value="3", desc="High Fixation Image")
+            ### START OF END ROUTINE CODE SBASODI1 (HIGH_FIXATION)
+            
             # keep track of which components have finished
             high_fixation_crossComponents = [high_fixation_img]
             for thisComponent in high_fixation_crossComponents:
@@ -956,6 +915,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 if hasattr(thisComponent, "setAutoDraw"):
                     thisComponent.setAutoDraw(False)
             thisExp.addData('high_fixation_cross.stopped', globalClock.getTime(format='float'))
+            # Run 'End Routine' code from code_4
+            ### END ROUTINE SBASODI1 (HIGH_FIXATION)
+            task_trigger(value="4", desc="High Fixation Image")
+            ### END OF END ROUTINE CODE SBASODI1 (HIGH_FIXATION)
+            
             # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
             if routineForceEnded:
                 routineTimer.reset()
@@ -1030,8 +994,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # update component parameters for each repeat
                 thisExp.addData('low_val_imgs.started', globalClock.getTime(format='float'))
                 low_val_img.setImage(image_file)
+                # Run 'Begin Routine' code from code_3
+                ### START ROUTINE SBASODI1 (LOW)
+                task_trigger(value="1", desc="Low Valence Image")
+                ### END OF START ROUTINE CODE SBASODI1 (LOW)
                 # keep track of which components have finished
-                low_val_imgsComponents = [low_val_img, low_blank_img]
+                low_val_imgsComponents = [low_val_img]
                 for thisComponent in low_val_imgsComponents:
                     thisComponent.tStart = None
                     thisComponent.tStop = None
@@ -1046,7 +1014,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 
                 # --- Run Routine "low_val_imgs" ---
                 routineForceEnded = not continueRoutine
-                while continueRoutine and routineTimer.getTime() < 9.0:
+                while continueRoutine and routineTimer.getTime() < 6.0:
                     # get current time
                     t = routineTimer.getTime()
                     tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -1088,40 +1056,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                             low_val_img.status = FINISHED
                             low_val_img.setAutoDraw(False)
                     
-                    # *low_blank_img* updates
-                    
-                    # if low_blank_img is starting this frame...
-                    if low_blank_img.status == NOT_STARTED and tThisFlip >= 6-frameTolerance:
-                        # keep track of start time/frame for later
-                        low_blank_img.frameNStart = frameN  # exact frame index
-                        low_blank_img.tStart = t  # local t and not account for scr refresh
-                        low_blank_img.tStartRefresh = tThisFlipGlobal  # on global time
-                        win.timeOnFlip(low_blank_img, 'tStartRefresh')  # time at next scr refresh
-                        # add timestamp to datafile
-                        thisExp.timestampOnFlip(win, 'low_blank_img.started')
-                        # update status
-                        low_blank_img.status = STARTED
-                        low_blank_img.setAutoDraw(True)
-                    
-                    # if low_blank_img is active this frame...
-                    if low_blank_img.status == STARTED:
-                        # update params
-                        pass
-                    
-                    # if low_blank_img is stopping this frame...
-                    if low_blank_img.status == STARTED:
-                        # is it time to stop? (based on global clock, using actual start)
-                        if tThisFlipGlobal > low_blank_img.tStartRefresh + 3-frameTolerance:
-                            # keep track of stop time/frame for later
-                            low_blank_img.tStop = t  # not accounting for scr refresh
-                            low_blank_img.tStopRefresh = tThisFlipGlobal  # on global time
-                            low_blank_img.frameNStop = frameN  # exact frame index
-                            # add timestamp to datafile
-                            thisExp.timestampOnFlip(win, 'low_blank_img.stopped')
-                            # update status
-                            low_blank_img.status = FINISHED
-                            low_blank_img.setAutoDraw(False)
-                    
                     # check for quit (typically the Esc key)
                     if defaultKeyboard.getKeys(keyList=["escape"]):
                         thisExp.status = FINISHED
@@ -1148,11 +1082,110 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     if hasattr(thisComponent, "setAutoDraw"):
                         thisComponent.setAutoDraw(False)
                 thisExp.addData('low_val_imgs.stopped', globalClock.getTime(format='float'))
+                # Run 'End Routine' code from code_3
+                ### END ROUTINE SBASODI1 (LOW)
+                task_trigger(value="2", desc="Low Valence Image")
+                ### END OF END ROUTINE CODE SBASODI1 (LOW)
+                
                 # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
                 if routineForceEnded:
                     routineTimer.reset()
                 else:
-                    routineTimer.addTime(-9.000000)
+                    routineTimer.addTime(-6.000000)
+                
+                # --- Prepare to start Routine "low_blank" ---
+                continueRoutine = True
+                # update component parameters for each repeat
+                thisExp.addData('low_blank.started', globalClock.getTime(format='float'))
+                # keep track of which components have finished
+                low_blankComponents = [low_blank_image]
+                for thisComponent in low_blankComponents:
+                    thisComponent.tStart = None
+                    thisComponent.tStop = None
+                    thisComponent.tStartRefresh = None
+                    thisComponent.tStopRefresh = None
+                    if hasattr(thisComponent, 'status'):
+                        thisComponent.status = NOT_STARTED
+                # reset timers
+                t = 0
+                _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+                frameN = -1
+                
+                # --- Run Routine "low_blank" ---
+                routineForceEnded = not continueRoutine
+                while continueRoutine and routineTimer.getTime() < 3.0:
+                    # get current time
+                    t = routineTimer.getTime()
+                    tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+                    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+                    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+                    # update/draw components on each frame
+                    
+                    # *low_blank_image* updates
+                    
+                    # if low_blank_image is starting this frame...
+                    if low_blank_image.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                        # keep track of start time/frame for later
+                        low_blank_image.frameNStart = frameN  # exact frame index
+                        low_blank_image.tStart = t  # local t and not account for scr refresh
+                        low_blank_image.tStartRefresh = tThisFlipGlobal  # on global time
+                        win.timeOnFlip(low_blank_image, 'tStartRefresh')  # time at next scr refresh
+                        # add timestamp to datafile
+                        thisExp.timestampOnFlip(win, 'low_blank_image.started')
+                        # update status
+                        low_blank_image.status = STARTED
+                        low_blank_image.setAutoDraw(True)
+                    
+                    # if low_blank_image is active this frame...
+                    if low_blank_image.status == STARTED:
+                        # update params
+                        pass
+                    
+                    # if low_blank_image is stopping this frame...
+                    if low_blank_image.status == STARTED:
+                        # is it time to stop? (based on global clock, using actual start)
+                        if tThisFlipGlobal > low_blank_image.tStartRefresh + 3.0-frameTolerance:
+                            # keep track of stop time/frame for later
+                            low_blank_image.tStop = t  # not accounting for scr refresh
+                            low_blank_image.tStopRefresh = tThisFlipGlobal  # on global time
+                            low_blank_image.frameNStop = frameN  # exact frame index
+                            # add timestamp to datafile
+                            thisExp.timestampOnFlip(win, 'low_blank_image.stopped')
+                            # update status
+                            low_blank_image.status = FINISHED
+                            low_blank_image.setAutoDraw(False)
+                    
+                    # check for quit (typically the Esc key)
+                    if defaultKeyboard.getKeys(keyList=["escape"]):
+                        thisExp.status = FINISHED
+                    if thisExp.status == FINISHED or endExpNow:
+                        endExperiment(thisExp, win=win)
+                        return
+                    
+                    # check if all components have finished
+                    if not continueRoutine:  # a component has requested a forced-end of Routine
+                        routineForceEnded = True
+                        break
+                    continueRoutine = False  # will revert to True if at least one component still running
+                    for thisComponent in low_blankComponents:
+                        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                            continueRoutine = True
+                            break  # at least one component has not yet finished
+                    
+                    # refresh the screen
+                    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                        win.flip()
+                
+                # --- Ending Routine "low_blank" ---
+                for thisComponent in low_blankComponents:
+                    if hasattr(thisComponent, "setAutoDraw"):
+                        thisComponent.setAutoDraw(False)
+                thisExp.addData('low_blank.stopped', globalClock.getTime(format='float'))
+                # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+                if routineForceEnded:
+                    routineTimer.reset()
+                else:
+                    routineTimer.addTime(-3.000000)
                 thisExp.nextEntry()
                 
                 if thisSession is not None:
@@ -1165,6 +1198,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             continueRoutine = True
             # update component parameters for each repeat
             thisExp.addData('low_fixation_cross.started', globalClock.getTime(format='float'))
+            # Run 'Begin Routine' code from code_5
+            ### START ROUTINE SBASODI1 (LOW_FIXATION)
+            task_trigger(value="3", desc="Low Fixation Image")
+            ### START OF END ROUTINE CODE SBASODI1 (LOW_FIXATION)
+            
             # keep track of which components have finished
             low_fixation_crossComponents = [low_fixation_img]
             for thisComponent in low_fixation_crossComponents:
@@ -1249,6 +1287,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 if hasattr(thisComponent, "setAutoDraw"):
                     thisComponent.setAutoDraw(False)
             thisExp.addData('low_fixation_cross.stopped', globalClock.getTime(format='float'))
+            # Run 'End Routine' code from code_5
+            ### END ROUTINE SBASODI1 (LOW_FIXATION)
+            task_trigger(value="4", desc="Low Fixation Image")
+            ### END OF END ROUTINE CODE SBASODI1 (LOW_FIXATION)
             # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
             if routineForceEnded:
                 routineTimer.reset()
@@ -1353,35 +1395,6 @@ if __name__ == '__main__':
     logFile = setupLogging(filename=thisExp.dataFileName)
     win = setupWindow(expInfo=expInfo)
     setupDevices(expInfo=expInfo, thisExp=thisExp, win=win)
-    
-    #expName = 'C:/Users/CABI Users/Desktop/user_experiments/sbasodi/CABI_SYM_exp_with_ports_and_counter_balancing';
-    expName = 'CABI_SYM_exp_with_ports_and_counter_balancing';
-    workspace = 'C:/Users/CABI Users/Desktop/user_experiments/calhoun/crest_tms/workspace_files/BrainCapMR_64channel_workspace.rwksp';
-    workspace = 'C:/Users/CABI Users/Desktop/user_experiments/calhoun/crest_tms/workspace_files/net32.rwksp';
-    #participant = str(expInfo.get('participant'));
-    participant = expInfo.get('participant');
-    
-    print('Participant is: ', participant);
-    
-    #rcs = setupBrainProductsRCS(expName, workspace, participant);
-    
-    rcs = brainproducts.RemoteControlServer(host='143.215.238.204',timeout=20)
-    rcs.open(expName, workspace=workspace,participant=participant)
-
-    # Open BrainVision Recorder with the previously entered settings
-    rcs.openRecorder()
-    time.sleep(2)
-
-    rcs.mode = 'monitor' 
-    print(rcs.recordingState)
-    time.sleep(2)
-
-    
-    # Start recording
-    rcs.startRecording()
-    print(rcs.recordingState)
-    time.sleep(6)
-
     run(
         expInfo=expInfo, 
         thisExp=thisExp, 
@@ -1389,14 +1402,4 @@ if __name__ == '__main__':
         globalClock='float'
     )
     saveData(thisExp=thisExp)
-    
-    # Stop recording
-    rcs.stopRecording()
-    time.sleep(1)
-
-    # Go back to idle state
-    rcs.mode = 'default';
-    time.sleep(2);
-    rcs.close()
-    
     quit(thisExp=thisExp, win=win)
