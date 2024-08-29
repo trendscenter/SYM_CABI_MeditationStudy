@@ -1,0 +1,38 @@
+#####################
+After generating python code from Psychopy.. need to make the following code additions manually
+
+Inside main() :
+1.  before run() method
+    port, outlet, rcs, rcs_recording_flag = ut.eeg_setup(expName, expInfo.get('participant'))
+
+2. after run() method
+    ut.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
+
+3. inside endExperiment() lastline (May not be needed.. just recheck after connecting with RCS Server)
+    ut.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
+
+######################################
+Base psychopy file for each python script along with the task trigger values.
+
+3_RestingState1.py:  (based on 3_RestingState1.psyexp)
+	Fixation cross (start -> 1 ;   end -> 2)
+
+
+4_AversiveVisualStimuliTask.py (based on 4_AversiveVisualStimuliTask.psyexp)
+	Valence Image (start -> 3 ; end -> 4)
+	Fixation cross (start -> 5;  end -> 6)
+
+
+5_RestingState2.py  (based on 3_RestingState1.psyexp)
+	Fixation cross (start -> 7 ; end -> 8)
+
+
+6_SlowBreathingSYMTask.py (based on 6_SlowBreathingSYMTask.psyexp)
+	SYM Video     (start -> 9 ; end -> 10)
+	Breathing Image (start -> 11 ; end -> 12)
+
+
+7_MeditativeThoughtlessEyesClosedState.py (based on 3_RestingState1.psyexp)
+	Meditation Mesg Image (start -> 13 ; end -> 14)
+
+
