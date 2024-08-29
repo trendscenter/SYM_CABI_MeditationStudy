@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Sun Jul 28 19:46:09 2024
+    on Tue Aug 27 17:01:35 2024
 If you publish work using this script the most relevant publication is:
 
-    Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
-        PsychoPy2: Experiments in behavior made easy Behav Res 51: 195. 
+    Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019)
+        PsychoPy2: Experiments in behavior made easy Behav Res 51: 195.
         https://doi.org/10.3758/s13428-018-01193-y
 
 """
@@ -15,6 +15,7 @@ If you publish work using this script the most relevant publication is:
 from psychopy import locale_setup
 from psychopy import prefs
 from psychopy import plugins
+
 plugins.activatePlugins()
 prefs.hardware['audioLib'] = 'ptb'
 prefs.hardware['audioLatencyMode'] = '3'
@@ -32,6 +33,10 @@ import sys  # to get file system encoding
 
 import psychopy.iohub as io
 from psychopy.hardware import keyboard
+
+# Run 'Before Experiment' code from code
+##BEFORE EXPERIMENT
+import utils as ut
 
 # --- Setup global variables (available in all functions) ---
 # create a device manager to handle hardware (keyboards, mice, mirophones, speakers, etc.)
@@ -74,6 +79,7 @@ if PILOTING:
         prefs.piloting['pilotLoggingLevel']
     )
 
+
 def showExpInfoDlg(expInfo):
     """
     Show participant info dialog.
@@ -81,7 +87,7 @@ def showExpInfoDlg(expInfo):
     ==========
     expInfo : dict
         Information about this experiment.
-    
+
     Returns
     ==========
     dict
@@ -100,24 +106,24 @@ def showExpInfoDlg(expInfo):
 def setupData(expInfo, dataDir=None):
     """
     Make an ExperimentHandler to handle trials and saving.
-    
+
     Parameters
     ==========
     expInfo : dict
         Information about this experiment, created by the `setupExpInfo` function.
     dataDir : Path, str or None
-        Folder to save the data to, leave as None to create a folder in the current directory.    
+        Folder to save the data to, leave as None to create a folder in the current directory.
     Returns
     ==========
     psychopy.data.ExperimentHandler
-        Handler object for this experiment, contains the data to save and information about 
+        Handler object for this experiment, contains the data to save and information about
         where to save it to.
     """
     # remove dialog-specific syntax from expInfo
     for key, val in expInfo.copy().items():
         newKey, _ = data.utils.parsePipeSyntax(key)
         expInfo[newKey] = expInfo.pop(key)
-    
+
     # data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
     if dataDir is None:
         dataDir = _thisDir
@@ -126,7 +132,7 @@ def setupData(expInfo, dataDir=None):
     if os.path.isabs(filename):
         dataDir = os.path.commonprefix([dataDir, filename])
         filename = os.path.relpath(filename, dataDir)
-    
+
     # an ExperimentHandler isn't essential but helps with data saving
     thisExp = data.ExperimentHandler(
         name=expName, version='',
@@ -144,12 +150,12 @@ def setupData(expInfo, dataDir=None):
 def setupLogging(filename):
     """
     Setup a log file and tell it what level to log at.
-    
+
     Parameters
     ==========
     filename : str or pathlib.Path
         Filename to save log file and data files as, doesn't need an extension.
-    
+
     Returns
     ==========
     psychopy.logging.LogFile
@@ -158,22 +164,22 @@ def setupLogging(filename):
     # this outputs to the screen, not a file
     logging.console.setLevel(_loggingLevel)
     # save a log file for detail verbose info
-    logFile = logging.LogFile(filename+'.log', level=_loggingLevel)
-    
+    logFile = logging.LogFile(filename + '.log', level=_loggingLevel)
+
     return logFile
 
 
 def setupWindow(expInfo=None, win=None):
     """
     Setup the Window
-    
+
     Parameters
     ==========
     expInfo : dict
         Information about this experiment, created by the `setupExpInfo` function.
     win : psychopy.visual.Window
         Window to setup - leave as None to create a new window.
-    
+
     Returns
     ==========
     psychopy.visual.Window
@@ -181,21 +187,21 @@ def setupWindow(expInfo=None, win=None):
     """
     if PILOTING:
         logging.debug('Fullscreen settings ignored as running in pilot mode.')
-    
+
     if win is None:
         # if not given a window to setup, make one
         win = visual.Window(
             size=_winSize, fullscr=_fullScr, screen=0,
             winType='pyglet', allowStencil=False,
-            monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+            monitor='testMonitor', color=[0, 0, 0], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
             blendMode='avg', useFBO=True,
-            units='height', 
+            units='height',
             checkTiming=False  # we're going to do this ourselves in a moment
         )
     else:
         # if we have a window, just set the attributes which are safe to set
-        win.color = [0,0,0]
+        win.color = [0, 0, 0]
         win.colorSpace = 'rgb'
         win.backgroundImage = ''
         win.backgroundFit = 'none'
@@ -210,21 +216,21 @@ def setupWindow(expInfo=None, win=None):
     # show a visual indicator if we're in piloting mode
     if PILOTING and prefs.piloting['showPilotingIndicator']:
         win.showPilotingIndicator()
-    
+
     return win
 
 
 def setupDevices(expInfo, thisExp, win):
     """
-    Setup whatever devices are available (mouse, keyboard, speaker, eyetracker, etc.) and add them to 
+    Setup whatever devices are available (mouse, keyboard, speaker, eyetracker, etc.) and add them to
     the device manager (deviceManager)
-    
+
     Parameters
     ==========
     expInfo : dict
         Information about this experiment, created by the `setupExpInfo` function.
     thisExp : psychopy.data.ExperimentHandler
-        Handler object for this experiment, contains the data to save and information about 
+        Handler object for this experiment, contains the data to save and information about
         where to save it to.
     win : psychopy.visual.Window
         Window in which to run this experiment.
@@ -235,17 +241,17 @@ def setupDevices(expInfo, thisExp, win):
     """
     # --- Setup input devices ---
     ioConfig = {}
-    
+
     # Setup iohub keyboard
     ioConfig['Keyboard'] = dict(use_keymap='psychopy')
-    
+
     ioSession = '1'
     if 'session' in expInfo:
         ioSession = str(expInfo['session'])
     ioServer = io.launchHubServer(window=win, **ioConfig)
     # store ioServer object in the device manager
     deviceManager.ioServer = ioServer
-    
+
     # create a default keyboard (e.g. to check for escape)
     if deviceManager.getDevice('defaultKeyboard') is None:
         deviceManager.addDevice(
@@ -254,14 +260,15 @@ def setupDevices(expInfo, thisExp, win):
     # return True if completed successfully
     return True
 
+
 def pauseExperiment(thisExp, win=None, timers=[], playbackComponents=[]):
     """
     Pause this experiment, preventing the flow from advancing to the next routine until resumed.
-    
+
     Parameters
     ==========
     thisExp : psychopy.data.ExperimentHandler
-        Handler object for this experiment, contains the data to save and information about 
+        Handler object for this experiment, contains the data to save and information about
         where to save it to.
     win : psychopy.visual.Window
         Window for this experiment.
@@ -273,7 +280,7 @@ def pauseExperiment(thisExp, win=None, timers=[], playbackComponents=[]):
     # if we are not paused, do nothing
     if thisExp.status != PAUSED:
         return
-    
+
     # pause any playback components
     for comp in playbackComponents:
         comp.pause()
@@ -310,13 +317,13 @@ def pauseExperiment(thisExp, win=None, timers=[], playbackComponents=[]):
 def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     """
     Run the experiment flow.
-    
+
     Parameters
     ==========
     expInfo : dict
         Information about this experiment, created by the `setupExpInfo` function.
     thisExp : psychopy.data.ExperimentHandler
-        Handler object for this experiment, contains the data to save and information about 
+        Handler object for this experiment, contains the data to save and information about
         where to save it to.
     psychopy.visual.Window
         Window in which to run this experiment.
@@ -349,21 +356,21 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameDur = 1.0 / round(expInfo['frameRate'])
     else:
         frameDur = 1.0 / 60.0  # could not measure, so guess
-    
+
     # Start Code - component code to be run after the window creation
-    
+
     # --- Initialize components for Routine "trial" ---
     rs_cross = visual.ImageStim(
         win=win,
-        name='rs_cross', 
+        name='rs_cross',
         image='./images/fixation_cross.png', mask=None, anchor='center',
-        ori=0.0, pos=(0, 0), size=(1,1),
-        color=[1,1,1], colorSpace='rgb', opacity=None,
+        ori=0.0, pos=(0, 0), size=(1, 1),
+        color=[1, 1, 1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
-    
+
     # create some handy timers
-    
+
     # global clock to track the time since experiment started
     if globalClock is None:
         # create a clock if not given one
@@ -389,11 +396,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     expInfo['expStart'] = data.getDateStr(
         format='%Y-%m-%d %Hh%M.%S.%f %z', fractionalSecondDigits=6
     )
-    
+
     # --- Prepare to start Routine "trial" ---
     continueRoutine = True
     # update component parameters for each repeat
     thisExp.addData('trial.started', globalClock.getTime(format='float'))
+    # Run 'Begin Routine' code from code
+    ### START ROUTINE SBASODI1 (FIXATION)
+    ut.task_trigger(value="7", port=port, outlet=outlet, desc="Fixation Image")
+
     # keep track of which components have finished
     trialComponents = [rs_cross]
     for thisComponent in trialComponents:
@@ -407,7 +418,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     t = 0
     _timeToFirstFrame = win.getFutureFlipTime(clock="now")
     frameN = -1
-    
+
     # --- Run Routine "trial" ---
     routineForceEnded = not continueRoutine
     while continueRoutine and routineTimer.getTime() < 500.0:
@@ -417,11 +428,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
-        
+
         # *rs_cross* updates
-        
+
         # if rs_cross is starting this frame...
-        if rs_cross.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        if rs_cross.status == NOT_STARTED and tThisFlip >= 0.0 - frameTolerance:
             # keep track of start time/frame for later
             rs_cross.frameNStart = frameN  # exact frame index
             rs_cross.tStart = t  # local t and not account for scr refresh
@@ -432,16 +443,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # update status
             rs_cross.status = STARTED
             rs_cross.setAutoDraw(True)
-        
+
         # if rs_cross is active this frame...
         if rs_cross.status == STARTED:
             # update params
             pass
-        
+
         # if rs_cross is stopping this frame...
         if rs_cross.status == STARTED:
             # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > rs_cross.tStartRefresh + 500-frameTolerance:
+            if tThisFlipGlobal > rs_cross.tStartRefresh + 500 - frameTolerance:
                 # keep track of stop time/frame for later
                 rs_cross.tStop = t  # not accounting for scr refresh
                 rs_cross.tStopRefresh = tThisFlipGlobal  # on global time
@@ -451,14 +462,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # update status
                 rs_cross.status = FINISHED
                 rs_cross.setAutoDraw(False)
-        
+
         # check for quit (typically the Esc key)
         if defaultKeyboard.getKeys(keyList=["escape"]):
             thisExp.status = FINISHED
         if thisExp.status == FINISHED or endExpNow:
             endExperiment(thisExp, win=win)
             return
-        
+
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
             routineForceEnded = True
@@ -468,23 +479,27 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                 continueRoutine = True
                 break  # at least one component has not yet finished
-        
+
         # refresh the screen
         if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
             win.flip()
-    
+
     # --- Ending Routine "trial" ---
     for thisComponent in trialComponents:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     thisExp.addData('trial.stopped', globalClock.getTime(format='float'))
+    # Run 'End Routine' code from code
+    ### END ROUTINE SBASODI1 (HIGH_FIXATION)
+    ut.task_trigger(value="8", port=port, outlet=outlet, desc="Fixation Image")
+
     # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
     if routineForceEnded:
         routineTimer.reset()
     else:
         routineTimer.addTime(-500.000000)
     thisExp.nextEntry()
-    
+
     # mark experiment as finished
     endExperiment(thisExp, win=win)
 
@@ -492,11 +507,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
 def saveData(thisExp):
     """
     Save data from this experiment
-    
+
     Parameters
     ==========
     thisExp : psychopy.data.ExperimentHandler
-        Handler object for this experiment, contains the data to save and information about 
+        Handler object for this experiment, contains the data to save and information about
         where to save it to.
     """
     filename = thisExp.dataFileName
@@ -508,13 +523,13 @@ def saveData(thisExp):
 def endExperiment(thisExp, win=None):
     """
     End this experiment, performing final shut down operations.
-    
+
     This function does NOT close the window or end the Python process - use `quit` for this.
-    
+
     Parameters
     ==========
     thisExp : psychopy.data.ExperimentHandler
-        Handler object for this experiment, contains the data to save and information about 
+        Handler object for this experiment, contains the data to save and information about
         where to save it to.
     win : psychopy.visual.Window
         Window for this experiment.
@@ -522,7 +537,7 @@ def endExperiment(thisExp, win=None):
     if win is not None:
         # remove autodraw from all current components
         win.clearAutoDraw()
-        # Flip one final time so any remaining win.callOnFlip() 
+        # Flip one final time so any remaining win.callOnFlip()
         # and win.timeOnFlip() tasks get executed
         win.flip()
     # mark experiment handler as finished
@@ -536,7 +551,7 @@ def endExperiment(thisExp, win=None):
 def quit(thisExp, win=None, thisSession=None):
     """
     Fully quit, closing the window and ending the Python process.
-    
+
     Parameters
     ==========
     win : psychopy.visual.Window
@@ -547,7 +562,7 @@ def quit(thisExp, win=None, thisSession=None):
     thisExp.abort()  # or data files will save again on exit
     # make sure everything is closed down
     if win is not None:
-        # Flip one final time so any remaining win.callOnFlip() 
+        # Flip one final time so any remaining win.callOnFlip()
         # and win.timeOnFlip() tasks get executed before quitting
         win.flip()
         win.close()
@@ -569,11 +584,18 @@ if __name__ == '__main__':
     logFile = setupLogging(filename=thisExp.dataFileName)
     win = setupWindow(expInfo=expInfo)
     setupDevices(expInfo=expInfo, thisExp=thisExp, win=win)
+
+    port, outlet, rcs, rcs_recording_flag = ut.eeg_setup(expName, expInfo.get('participant'))
+
     run(
-        expInfo=expInfo, 
-        thisExp=thisExp, 
+        expInfo=expInfo,
+        thisExp=thisExp,
         win=win,
         globalClock='float'
     )
+
+    ut.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
+
     saveData(thisExp=thisExp)
+
     quit(thisExp=thisExp, win=win)

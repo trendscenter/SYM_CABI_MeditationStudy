@@ -1,12 +1,12 @@
-﻿#!/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Thu Aug  1 11:44:48 2024
+    on Tue Aug 27 18:11:56 2024
 If you publish work using this script the most relevant publication is:
 
-    Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
-        PsychoPy2: Experiments in behavior made easy Behav Res 51: 195. 
+    Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019)
+        PsychoPy2: Experiments in behavior made easy Behav Res 51: 195.
         https://doi.org/10.3758/s13428-018-01193-y
 
 """
@@ -15,6 +15,7 @@ If you publish work using this script the most relevant publication is:
 from psychopy import locale_setup
 from psychopy import prefs
 from psychopy import plugins
+
 plugins.activatePlugins()
 prefs.hardware['audioLib'] = 'ptb'
 prefs.hardware['audioLatencyMode'] = '3'
@@ -36,13 +37,17 @@ from psychopy.hardware import keyboard
 # Run 'Before Experiment' code from code_2
 import numpy as np
 import random
+import utils as ut
 
-high_imgs_order=np.random.permutation(18).reshape((6,3)).tolist()
+high_imgs_order = np.random.permutation(18).reshape((6, 3)).tolist()
 
-low_imgs_order=np.random.permutation(18).reshape((6,3)).tolist()
+low_imgs_order = np.random.permutation(18).reshape((6, 3)).tolist()
 
-blocks = ['H']*6 + ['L']*6
-random.shuffle(blocks)
+blocks = ['H'] * 6 + ['L'] * 6
+# Code to make sure all Low valence or high valence do not appear together
+while (''.join(blocks) == 'HHHHHHLLLLLL' or ''.join(blocks) == 'LLLLLLHHHHHH'):
+    random.shuffle(blocks)
+
 global high_nReps
 global low_nReps
 high_nReps = 1
@@ -51,9 +56,7 @@ low_nReps = 0
 if blocks[0] == 'L':
     high_nReps = 0
     low_nReps = 1
-    
-def task_trigger(value, desc=""):
-    print(value)
+
 # --- Setup global variables (available in all functions) ---
 # create a device manager to handle hardware (keyboards, mice, mirophones, speakers, etc.)
 deviceManager = hardware.DeviceManager()
@@ -61,7 +64,7 @@ deviceManager = hardware.DeviceManager()
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
 psychopyVersion = '2024.1.5'
-expName = 'CABI_SYM_exp_with_ports_and_counter_balancing'  # from the Builder filename that created this script
+expName = 'CABI_SYM_AversiveVisualStimuliTask'  # from the Builder filename that created this script
 # information about this experiment
 expInfo = {
     'participant': f"{randint(0, 999999):06.0f}",
@@ -95,6 +98,7 @@ if PILOTING:
         prefs.piloting['pilotLoggingLevel']
     )
 
+
 def showExpInfoDlg(expInfo):
     """
     Show participant info dialog.
@@ -102,7 +106,7 @@ def showExpInfoDlg(expInfo):
     ==========
     expInfo : dict
         Information about this experiment.
-    
+
     Returns
     ==========
     dict
@@ -121,24 +125,24 @@ def showExpInfoDlg(expInfo):
 def setupData(expInfo, dataDir=None):
     """
     Make an ExperimentHandler to handle trials and saving.
-    
+
     Parameters
     ==========
     expInfo : dict
         Information about this experiment, created by the `setupExpInfo` function.
     dataDir : Path, str or None
-        Folder to save the data to, leave as None to create a folder in the current directory.    
+        Folder to save the data to, leave as None to create a folder in the current directory.
     Returns
     ==========
     psychopy.data.ExperimentHandler
-        Handler object for this experiment, contains the data to save and information about 
+        Handler object for this experiment, contains the data to save and information about
         where to save it to.
     """
     # remove dialog-specific syntax from expInfo
     for key, val in expInfo.copy().items():
         newKey, _ = data.utils.parsePipeSyntax(key)
         expInfo[newKey] = expInfo.pop(key)
-    
+
     # data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
     if dataDir is None:
         dataDir = _thisDir
@@ -147,12 +151,12 @@ def setupData(expInfo, dataDir=None):
     if os.path.isabs(filename):
         dataDir = os.path.commonprefix([dataDir, filename])
         filename = os.path.relpath(filename, dataDir)
-    
+
     # an ExperimentHandler isn't essential but helps with data saving
     thisExp = data.ExperimentHandler(
         name=expName, version='',
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='./data/4_AversiveVisualStimuliTaskUpdatedWithTriggerPrints_lastrun.py',
+        originPath='./data/4_AversiveVisualStimuliTask_lastrun.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='time'
     )
@@ -165,12 +169,12 @@ def setupData(expInfo, dataDir=None):
 def setupLogging(filename):
     """
     Setup a log file and tell it what level to log at.
-    
+
     Parameters
     ==========
     filename : str or pathlib.Path
         Filename to save log file and data files as, doesn't need an extension.
-    
+
     Returns
     ==========
     psychopy.logging.LogFile
@@ -179,22 +183,22 @@ def setupLogging(filename):
     # this outputs to the screen, not a file
     logging.console.setLevel(_loggingLevel)
     # save a log file for detail verbose info
-    logFile = logging.LogFile(filename+'.log', level=_loggingLevel)
-    
+    logFile = logging.LogFile(filename + '.log', level=_loggingLevel)
+
     return logFile
 
 
 def setupWindow(expInfo=None, win=None):
     """
     Setup the Window
-    
+
     Parameters
     ==========
     expInfo : dict
         Information about this experiment, created by the `setupExpInfo` function.
     win : psychopy.visual.Window
         Window to setup - leave as None to create a new window.
-    
+
     Returns
     ==========
     psychopy.visual.Window
@@ -202,21 +206,21 @@ def setupWindow(expInfo=None, win=None):
     """
     if PILOTING:
         logging.debug('Fullscreen settings ignored as running in pilot mode.')
-    
+
     if win is None:
         # if not given a window to setup, make one
         win = visual.Window(
             size=_winSize, fullscr=_fullScr, screen=0,
             winType='pyglet', allowStencil=False,
-            monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+            monitor='testMonitor', color=[0, 0, 0], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
             blendMode='avg', useFBO=True,
-            units='height', 
+            units='height',
             checkTiming=False  # we're going to do this ourselves in a moment
         )
     else:
         # if we have a window, just set the attributes which are safe to set
-        win.color = [0,0,0]
+        win.color = [0, 0, 0]
         win.colorSpace = 'rgb'
         win.backgroundImage = ''
         win.backgroundFit = 'none'
@@ -231,21 +235,21 @@ def setupWindow(expInfo=None, win=None):
     # show a visual indicator if we're in piloting mode
     if PILOTING and prefs.piloting['showPilotingIndicator']:
         win.showPilotingIndicator()
-    
+
     return win
 
 
 def setupDevices(expInfo, thisExp, win):
     """
-    Setup whatever devices are available (mouse, keyboard, speaker, eyetracker, etc.) and add them to 
+    Setup whatever devices are available (mouse, keyboard, speaker, eyetracker, etc.) and add them to
     the device manager (deviceManager)
-    
+
     Parameters
     ==========
     expInfo : dict
         Information about this experiment, created by the `setupExpInfo` function.
     thisExp : psychopy.data.ExperimentHandler
-        Handler object for this experiment, contains the data to save and information about 
+        Handler object for this experiment, contains the data to save and information about
         where to save it to.
     win : psychopy.visual.Window
         Window in which to run this experiment.
@@ -256,17 +260,17 @@ def setupDevices(expInfo, thisExp, win):
     """
     # --- Setup input devices ---
     ioConfig = {}
-    
+
     # Setup iohub keyboard
     ioConfig['Keyboard'] = dict(use_keymap='psychopy')
-    
+
     ioSession = '1'
     if 'session' in expInfo:
         ioSession = str(expInfo['session'])
     ioServer = io.launchHubServer(window=win, **ioConfig)
     # store ioServer object in the device manager
     deviceManager.ioServer = ioServer
-    
+
     # create a default keyboard (e.g. to check for escape)
     if deviceManager.getDevice('defaultKeyboard') is None:
         deviceManager.addDevice(
@@ -275,14 +279,15 @@ def setupDevices(expInfo, thisExp, win):
     # return True if completed successfully
     return True
 
+
 def pauseExperiment(thisExp, win=None, timers=[], playbackComponents=[]):
     """
     Pause this experiment, preventing the flow from advancing to the next routine until resumed.
-    
+
     Parameters
     ==========
     thisExp : psychopy.data.ExperimentHandler
-        Handler object for this experiment, contains the data to save and information about 
+        Handler object for this experiment, contains the data to save and information about
         where to save it to.
     win : psychopy.visual.Window
         Window for this experiment.
@@ -294,7 +299,7 @@ def pauseExperiment(thisExp, win=None, timers=[], playbackComponents=[]):
     # if we are not paused, do nothing
     if thisExp.status != PAUSED:
         return
-    
+
     # pause any playback components
     for comp in playbackComponents:
         comp.pause()
@@ -331,13 +336,13 @@ def pauseExperiment(thisExp, win=None, timers=[], playbackComponents=[]):
 def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     """
     Run the experiment flow.
-    
+
     Parameters
     ==========
     expInfo : dict
         Information about this experiment, created by the `setupExpInfo` function.
     thisExp : psychopy.data.ExperimentHandler
-        Handler object for this experiment, contains the data to save and information about 
+        Handler object for this experiment, contains the data to save and information about
         where to save it to.
     psychopy.visual.Window
         Window in which to run this experiment.
@@ -370,76 +375,76 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameDur = 1.0 / round(expInfo['frameRate'])
     else:
         frameDur = 1.0 / 60.0  # could not measure, so guess
-    
+
     # Start Code - component code to be run after the window creation
-    
+
     # --- Initialize components for Routine "dummy_test" ---
     # Run 'Begin Experiment' code from code_2
     global high_nReps
     global low_nReps
-    
+
     # --- Initialize components for Routine "high_val_imgs" ---
     high_val_img = visual.ImageStim(
         win=win,
-        name='high_val_img', 
+        name='high_val_img',
         image='default.png', mask=None, anchor='center',
         ori=0.0, pos=(0, 0), size=(1, 1),
-        color=[1,1,1], colorSpace='rgb', opacity=None,
+        color=[1, 1, 1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
-    
+
     # --- Initialize components for Routine "high_blank" ---
     high_blank_img = visual.ImageStim(
         win=win,
-        name='high_blank_img', 
+        name='high_blank_img',
         image='images/blank_screen.png', mask=None, anchor='center',
         ori=0.0, pos=(0, 0), size=(1, 1),
-        color=[1,1,1], colorSpace='rgb', opacity=None,
+        color=[1, 1, 1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
-    
+
     # --- Initialize components for Routine "high_fixation_cross" ---
     high_fixation_img = visual.ImageStim(
         win=win,
-        name='high_fixation_img', 
+        name='high_fixation_img',
         image='images/fixation_cross.png', mask=None, anchor='center',
         ori=0.0, pos=(0, 0), size=(1, 1),
-        color=[1,1,1], colorSpace='rgb', opacity=None,
+        color=[1, 1, 1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
-    
+
     # --- Initialize components for Routine "low_val_imgs" ---
     low_val_img = visual.ImageStim(
         win=win,
-        name='low_val_img', 
+        name='low_val_img',
         image='default.png', mask=None, anchor='center',
         ori=0.0, pos=(0, 0), size=(1, 1),
-        color=[1,1,1], colorSpace='rgb', opacity=None,
+        color=[1, 1, 1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
-    
+
     # --- Initialize components for Routine "low_blank" ---
     low_blank_image = visual.ImageStim(
         win=win,
-        name='low_blank_image', 
+        name='low_blank_image',
         image='images/blank_screen.png', mask=None, anchor='center',
         ori=0.0, pos=(0, 0), size=(1, 1),
-        color=[1,1,1], colorSpace='rgb', opacity=None,
+        color=[1, 1, 1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
-    
+
     # --- Initialize components for Routine "low_fixation_cross" ---
     low_fixation_img = visual.ImageStim(
         win=win,
-        name='low_fixation_img', 
+        name='low_fixation_img',
         image='images/fixation_cross.png', mask=None, anchor='center',
         ori=0.0, pos=(0, 0), size=(1, 1),
-        color=[1,1,1], colorSpace='rgb', opacity=None,
+        color=[1, 1, 1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
-    
+
     # create some handy timers
-    
+
     # global clock to track the time since experiment started
     if globalClock is None:
         # create a clock if not given one
@@ -465,35 +470,35 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     expInfo['expStart'] = data.getDateStr(
         format='%Y-%m-%d %Hh%M.%S.%f %z', fractionalSecondDigits=6
     )
-    
+
     # set up handler to look after randomisation of conditions etc
-    block_repeat = data.TrialHandler(nReps=12.0, method='sequential', 
-        extraInfo=expInfo, originPath=-1,
-        trialList=[None],
-        seed=None, name='block_repeat')
+    block_repeat = data.TrialHandler(nReps=12.0, method='sequential',
+                                     extraInfo=expInfo, originPath=-1,
+                                     trialList=[None],
+                                     seed=None, name='block_repeat')
     thisExp.addLoop(block_repeat)  # add the loop to the experiment
     thisBlock_repeat = block_repeat.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisBlock_repeat.rgb)
     if thisBlock_repeat != None:
         for paramName in thisBlock_repeat:
             globals()[paramName] = thisBlock_repeat[paramName]
-    
+
     for thisBlock_repeat in block_repeat:
         currentLoop = block_repeat
         thisExp.timestampOnFlip(win, 'thisRow.t', format=globalClock.format)
         # pause experiment here if requested
         if thisExp.status == PAUSED:
             pauseExperiment(
-                thisExp=thisExp, 
-                win=win, 
-                timers=[routineTimer], 
+                thisExp=thisExp,
+                win=win,
+                timers=[routineTimer],
                 playbackComponents=[]
-        )
+            )
         # abbreviate parameter names if possible (e.g. rgb = thisBlock_repeat.rgb)
         if thisBlock_repeat != None:
             for paramName in thisBlock_repeat:
                 globals()[paramName] = thisBlock_repeat[paramName]
-        
+
         # --- Prepare to start Routine "dummy_test" ---
         continueRoutine = True
         # update component parameters for each repeat
@@ -506,8 +511,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             high_nReps = 0
             low_nReps = 1
         else:
-            raise Exception ('Invalid block ID. It should be either "H" or "L"')
-        
+            raise Exception('Invalid block ID. It should be either "H" or "L"')
+
         # keep track of which components have finished
         dummy_testComponents = []
         for thisComponent in dummy_testComponents:
@@ -521,7 +526,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         t = 0
         _timeToFirstFrame = win.getFutureFlipTime(clock="now")
         frameN = -1
-        
+
         # --- Run Routine "dummy_test" ---
         routineForceEnded = not continueRoutine
         while continueRoutine:
@@ -531,14 +536,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             tThisFlipGlobal = win.getFutureFlipTime(clock=None)
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
-            
+
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
                 thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
-            
+
             # check if all components have finished
             if not continueRoutine:  # a component has requested a forced-end of Routine
                 routineForceEnded = True
@@ -548,11 +553,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
                     break  # at least one component has not yet finished
-            
+
             # refresh the screen
             if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                 win.flip()
-        
+
         # --- Ending Routine "dummy_test" ---
         for thisComponent in dummy_testComponents:
             if hasattr(thisComponent, "setAutoDraw"):
@@ -560,63 +565,64 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         thisExp.addData('dummy_test.stopped', globalClock.getTime(format='float'))
         # the Routine "dummy_test" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
-        
+
         # set up handler to look after randomisation of conditions etc
-        high_block = data.TrialHandler(nReps=high_nReps, method='sequential', 
-            extraInfo=expInfo, originPath=-1,
-            trialList=[None],
-            seed=None, name='high_block')
+        high_block = data.TrialHandler(nReps=high_nReps, method='sequential',
+                                       extraInfo=expInfo, originPath=-1,
+                                       trialList=[None],
+                                       seed=None, name='high_block')
         thisExp.addLoop(high_block)  # add the loop to the experiment
         thisHigh_block = high_block.trialList[0]  # so we can initialise stimuli with some values
         # abbreviate parameter names if possible (e.g. rgb = thisHigh_block.rgb)
         if thisHigh_block != None:
             for paramName in thisHigh_block:
                 globals()[paramName] = thisHigh_block[paramName]
-        
+
         for thisHigh_block in high_block:
             currentLoop = high_block
             thisExp.timestampOnFlip(win, 'thisRow.t', format=globalClock.format)
             # pause experiment here if requested
             if thisExp.status == PAUSED:
                 pauseExperiment(
-                    thisExp=thisExp, 
-                    win=win, 
-                    timers=[routineTimer], 
+                    thisExp=thisExp,
+                    win=win,
+                    timers=[routineTimer],
                     playbackComponents=[]
-            )
+                )
             # abbreviate parameter names if possible (e.g. rgb = thisHigh_block.rgb)
             if thisHigh_block != None:
                 for paramName in thisHigh_block:
                     globals()[paramName] = thisHigh_block[paramName]
-            
+
             # set up handler to look after randomisation of conditions etc
-            within_high_block = data.TrialHandler(nReps=1.0, method='sequential', 
-                extraInfo=expInfo, originPath=-1,
-                trialList=data.importConditions('high_valence.xlsx', selection=high_imgs_order.pop()),
-                seed=None, name='within_high_block')
+            within_high_block = data.TrialHandler(nReps=1.0, method='sequential',
+                                                  extraInfo=expInfo, originPath=-1,
+                                                  trialList=data.importConditions('high_valence.xlsx',
+                                                                                  selection=high_imgs_order.pop()),
+                                                  seed=None, name='within_high_block')
             thisExp.addLoop(within_high_block)  # add the loop to the experiment
             thisWithin_high_block = within_high_block.trialList[0]  # so we can initialise stimuli with some values
             # abbreviate parameter names if possible (e.g. rgb = thisWithin_high_block.rgb)
             if thisWithin_high_block != None:
                 for paramName in thisWithin_high_block:
                     globals()[paramName] = thisWithin_high_block[paramName]
-            
+
             for thisWithin_high_block in within_high_block:
                 currentLoop = within_high_block
                 thisExp.timestampOnFlip(win, 'thisRow.t', format=globalClock.format)
                 # pause experiment here if requested
                 if thisExp.status == PAUSED:
                     pauseExperiment(
-                        thisExp=thisExp, 
-                        win=win, 
-                        timers=[routineTimer], 
+                        thisExp=thisExp,
+                        win=win,
+                        timers=[routineTimer],
                         playbackComponents=[]
-                )
+                    )
                 # abbreviate parameter names if possible (e.g. rgb = thisWithin_high_block.rgb)
                 if thisWithin_high_block != None:
                     for paramName in thisWithin_high_block:
                         globals()[paramName] = thisWithin_high_block[paramName]
-                
+
                 # --- Prepare to start Routine "high_val_imgs" ---
                 continueRoutine = True
                 # update component parameters for each repeat
@@ -624,7 +630,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 high_val_img.setImage(image_file)
                 # Run 'Begin Routine' code from code
                 ### START ROUTINE SBASODI1 (HIGH)
-                task_trigger(value="1", desc="High Valence Image")
+                ut.task_trigger(value="3", port=port, outlet=outlet, desc="High Valence Image")
                 ### END OF START ROUTINE CODE SBASODI1 (HIGH)
                 # keep track of which components have finished
                 high_val_imgsComponents = [high_val_img]
@@ -639,7 +645,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 t = 0
                 _timeToFirstFrame = win.getFutureFlipTime(clock="now")
                 frameN = -1
-                
+
                 # --- Run Routine "high_val_imgs" ---
                 routineForceEnded = not continueRoutine
                 while continueRoutine and routineTimer.getTime() < 6.0:
@@ -649,11 +655,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
                     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
                     # update/draw components on each frame
-                    
+
                     # *high_val_img* updates
-                    
+
                     # if high_val_img is starting this frame...
-                    if high_val_img.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                    if high_val_img.status == NOT_STARTED and tThisFlip >= 0.0 - frameTolerance:
                         # keep track of start time/frame for later
                         high_val_img.frameNStart = frameN  # exact frame index
                         high_val_img.tStart = t  # local t and not account for scr refresh
@@ -664,16 +670,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         # update status
                         high_val_img.status = STARTED
                         high_val_img.setAutoDraw(True)
-                    
+
                     # if high_val_img is active this frame...
                     if high_val_img.status == STARTED:
                         # update params
                         pass
-                    
+
                     # if high_val_img is stopping this frame...
                     if high_val_img.status == STARTED:
                         # is it time to stop? (based on global clock, using actual start)
-                        if tThisFlipGlobal > high_val_img.tStartRefresh + 6-frameTolerance:
+                        if tThisFlipGlobal > high_val_img.tStartRefresh + 6 - frameTolerance:
                             # keep track of stop time/frame for later
                             high_val_img.tStop = t  # not accounting for scr refresh
                             high_val_img.tStopRefresh = tThisFlipGlobal  # on global time
@@ -683,14 +689,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                             # update status
                             high_val_img.status = FINISHED
                             high_val_img.setAutoDraw(False)
-                    
+
                     # check for quit (typically the Esc key)
                     if defaultKeyboard.getKeys(keyList=["escape"]):
                         thisExp.status = FINISHED
                     if thisExp.status == FINISHED or endExpNow:
                         endExperiment(thisExp, win=win)
                         return
-                    
+
                     # check if all components have finished
                     if not continueRoutine:  # a component has requested a forced-end of Routine
                         routineForceEnded = True
@@ -700,11 +706,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                             continueRoutine = True
                             break  # at least one component has not yet finished
-                    
+
                     # refresh the screen
                     if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                         win.flip()
-                
+
                 # --- Ending Routine "high_val_imgs" ---
                 for thisComponent in high_val_imgsComponents:
                     if hasattr(thisComponent, "setAutoDraw"):
@@ -712,15 +718,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 thisExp.addData('high_val_imgs.stopped', globalClock.getTime(format='float'))
                 # Run 'End Routine' code from code
                 ### END ROUTINE SBASODI1 (HIGH)
-                task_trigger(value="2", desc="High Valence Image")
+                ut.task_trigger(value="4", port=port, outlet=outlet, desc="High Valence Image")
                 ### END OF END ROUTINE CODE SBASODI1 (HIGH)
-                
+
                 # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
                 if routineForceEnded:
                     routineTimer.reset()
                 else:
                     routineTimer.addTime(-6.000000)
-                
+
                 # --- Prepare to start Routine "high_blank" ---
                 continueRoutine = True
                 # update component parameters for each repeat
@@ -738,7 +744,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 t = 0
                 _timeToFirstFrame = win.getFutureFlipTime(clock="now")
                 frameN = -1
-                
+
                 # --- Run Routine "high_blank" ---
                 routineForceEnded = not continueRoutine
                 while continueRoutine and routineTimer.getTime() < 3.0:
@@ -748,11 +754,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
                     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
                     # update/draw components on each frame
-                    
+
                     # *high_blank_img* updates
-                    
+
                     # if high_blank_img is starting this frame...
-                    if high_blank_img.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                    if high_blank_img.status == NOT_STARTED and tThisFlip >= 0.0 - frameTolerance:
                         # keep track of start time/frame for later
                         high_blank_img.frameNStart = frameN  # exact frame index
                         high_blank_img.tStart = t  # local t and not account for scr refresh
@@ -763,16 +769,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         # update status
                         high_blank_img.status = STARTED
                         high_blank_img.setAutoDraw(True)
-                    
+
                     # if high_blank_img is active this frame...
                     if high_blank_img.status == STARTED:
                         # update params
                         pass
-                    
+
                     # if high_blank_img is stopping this frame...
                     if high_blank_img.status == STARTED:
                         # is it time to stop? (based on global clock, using actual start)
-                        if tThisFlipGlobal > high_blank_img.tStartRefresh + 3.0-frameTolerance:
+                        if tThisFlipGlobal > high_blank_img.tStartRefresh + 3.0 - frameTolerance:
                             # keep track of stop time/frame for later
                             high_blank_img.tStop = t  # not accounting for scr refresh
                             high_blank_img.tStopRefresh = tThisFlipGlobal  # on global time
@@ -782,14 +788,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                             # update status
                             high_blank_img.status = FINISHED
                             high_blank_img.setAutoDraw(False)
-                    
+
                     # check for quit (typically the Esc key)
                     if defaultKeyboard.getKeys(keyList=["escape"]):
                         thisExp.status = FINISHED
                     if thisExp.status == FINISHED or endExpNow:
                         endExperiment(thisExp, win=win)
                         return
-                    
+
                     # check if all components have finished
                     if not continueRoutine:  # a component has requested a forced-end of Routine
                         routineForceEnded = True
@@ -799,11 +805,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                             continueRoutine = True
                             break  # at least one component has not yet finished
-                    
+
                     # refresh the screen
                     if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                         win.flip()
-                
+
                 # --- Ending Routine "high_blank" ---
                 for thisComponent in high_blankComponents:
                     if hasattr(thisComponent, "setAutoDraw"):
@@ -815,22 +821,22 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 else:
                     routineTimer.addTime(-3.000000)
                 thisExp.nextEntry()
-                
+
                 if thisSession is not None:
                     # if running in a Session with a Liaison client, send data up to now
                     thisSession.sendExperimentData()
             # completed 1.0 repeats of 'within_high_block'
-            
-            
+
             # --- Prepare to start Routine "high_fixation_cross" ---
             continueRoutine = True
             # update component parameters for each repeat
             thisExp.addData('high_fixation_cross.started', globalClock.getTime(format='float'))
             # Run 'Begin Routine' code from code_4
             ### START ROUTINE SBASODI1 (HIGH_FIXATION)
-            task_trigger(value="3", desc="High Fixation Image")
+            ut.task_trigger(value="5", port=port, outlet=outlet, desc="High Fixation Image")
+
             ### START OF END ROUTINE CODE SBASODI1 (HIGH_FIXATION)
-            
+
             # keep track of which components have finished
             high_fixation_crossComponents = [high_fixation_img]
             for thisComponent in high_fixation_crossComponents:
@@ -844,7 +850,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             t = 0
             _timeToFirstFrame = win.getFutureFlipTime(clock="now")
             frameN = -1
-            
+
             # --- Run Routine "high_fixation_cross" ---
             routineForceEnded = not continueRoutine
             while continueRoutine and routineTimer.getTime() < 13.0:
@@ -854,11 +860,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 tThisFlipGlobal = win.getFutureFlipTime(clock=None)
                 frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
                 # update/draw components on each frame
-                
+
                 # *high_fixation_img* updates
-                
+
                 # if high_fixation_img is starting this frame...
-                if high_fixation_img.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                if high_fixation_img.status == NOT_STARTED and tThisFlip >= 0.0 - frameTolerance:
                     # keep track of start time/frame for later
                     high_fixation_img.frameNStart = frameN  # exact frame index
                     high_fixation_img.tStart = t  # local t and not account for scr refresh
@@ -869,16 +875,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update status
                     high_fixation_img.status = STARTED
                     high_fixation_img.setAutoDraw(True)
-                
+
                 # if high_fixation_img is active this frame...
                 if high_fixation_img.status == STARTED:
                     # update params
                     pass
-                
+
                 # if high_fixation_img is stopping this frame...
                 if high_fixation_img.status == STARTED:
                     # is it time to stop? (based on global clock, using actual start)
-                    if tThisFlipGlobal > high_fixation_img.tStartRefresh + 13-frameTolerance:
+                    if tThisFlipGlobal > high_fixation_img.tStartRefresh + 13 - frameTolerance:
                         # keep track of stop time/frame for later
                         high_fixation_img.tStop = t  # not accounting for scr refresh
                         high_fixation_img.tStopRefresh = tThisFlipGlobal  # on global time
@@ -888,14 +894,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         # update status
                         high_fixation_img.status = FINISHED
                         high_fixation_img.setAutoDraw(False)
-                
+
                 # check for quit (typically the Esc key)
                 if defaultKeyboard.getKeys(keyList=["escape"]):
                     thisExp.status = FINISHED
                 if thisExp.status == FINISHED or endExpNow:
                     endExperiment(thisExp, win=win)
                     return
-                
+
                 # check if all components have finished
                 if not continueRoutine:  # a component has requested a forced-end of Routine
                     routineForceEnded = True
@@ -905,11 +911,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                         continueRoutine = True
                         break  # at least one component has not yet finished
-                
+
                 # refresh the screen
                 if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                     win.flip()
-            
+
             # --- Ending Routine "high_fixation_cross" ---
             for thisComponent in high_fixation_crossComponents:
                 if hasattr(thisComponent, "setAutoDraw"):
@@ -917,78 +923,79 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             thisExp.addData('high_fixation_cross.stopped', globalClock.getTime(format='float'))
             # Run 'End Routine' code from code_4
             ### END ROUTINE SBASODI1 (HIGH_FIXATION)
-            task_trigger(value="4", desc="High Fixation Image")
+            ut.task_trigger(value="6", port=port, outlet=outlet, desc="High Fixation Image")
+
             ### END OF END ROUTINE CODE SBASODI1 (HIGH_FIXATION)
-            
+
             # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
             if routineForceEnded:
                 routineTimer.reset()
             else:
                 routineTimer.addTime(-13.000000)
             thisExp.nextEntry()
-            
+
             if thisSession is not None:
                 # if running in a Session with a Liaison client, send data up to now
                 thisSession.sendExperimentData()
         # completed high_nReps repeats of 'high_block'
-        
-        
+
         # set up handler to look after randomisation of conditions etc
-        low_block = data.TrialHandler(nReps=low_nReps, method='sequential', 
-            extraInfo=expInfo, originPath=-1,
-            trialList=[None],
-            seed=None, name='low_block')
+        low_block = data.TrialHandler(nReps=low_nReps, method='sequential',
+                                      extraInfo=expInfo, originPath=-1,
+                                      trialList=[None],
+                                      seed=None, name='low_block')
         thisExp.addLoop(low_block)  # add the loop to the experiment
         thisLow_block = low_block.trialList[0]  # so we can initialise stimuli with some values
         # abbreviate parameter names if possible (e.g. rgb = thisLow_block.rgb)
         if thisLow_block != None:
             for paramName in thisLow_block:
                 globals()[paramName] = thisLow_block[paramName]
-        
+
         for thisLow_block in low_block:
             currentLoop = low_block
             thisExp.timestampOnFlip(win, 'thisRow.t', format=globalClock.format)
             # pause experiment here if requested
             if thisExp.status == PAUSED:
                 pauseExperiment(
-                    thisExp=thisExp, 
-                    win=win, 
-                    timers=[routineTimer], 
+                    thisExp=thisExp,
+                    win=win,
+                    timers=[routineTimer],
                     playbackComponents=[]
-            )
+                )
             # abbreviate parameter names if possible (e.g. rgb = thisLow_block.rgb)
             if thisLow_block != None:
                 for paramName in thisLow_block:
                     globals()[paramName] = thisLow_block[paramName]
-            
+
             # set up handler to look after randomisation of conditions etc
-            within_low_block = data.TrialHandler(nReps=1.0, method='sequential', 
-                extraInfo=expInfo, originPath=-1,
-                trialList=data.importConditions('low_valence.xlsx', selection=low_imgs_order.pop()),
-                seed=None, name='within_low_block')
+            within_low_block = data.TrialHandler(nReps=1.0, method='sequential',
+                                                 extraInfo=expInfo, originPath=-1,
+                                                 trialList=data.importConditions('low_valence.xlsx',
+                                                                                 selection=low_imgs_order.pop()),
+                                                 seed=None, name='within_low_block')
             thisExp.addLoop(within_low_block)  # add the loop to the experiment
             thisWithin_low_block = within_low_block.trialList[0]  # so we can initialise stimuli with some values
             # abbreviate parameter names if possible (e.g. rgb = thisWithin_low_block.rgb)
             if thisWithin_low_block != None:
                 for paramName in thisWithin_low_block:
                     globals()[paramName] = thisWithin_low_block[paramName]
-            
+
             for thisWithin_low_block in within_low_block:
                 currentLoop = within_low_block
                 thisExp.timestampOnFlip(win, 'thisRow.t', format=globalClock.format)
                 # pause experiment here if requested
                 if thisExp.status == PAUSED:
                     pauseExperiment(
-                        thisExp=thisExp, 
-                        win=win, 
-                        timers=[routineTimer], 
+                        thisExp=thisExp,
+                        win=win,
+                        timers=[routineTimer],
                         playbackComponents=[]
-                )
+                    )
                 # abbreviate parameter names if possible (e.g. rgb = thisWithin_low_block.rgb)
                 if thisWithin_low_block != None:
                     for paramName in thisWithin_low_block:
                         globals()[paramName] = thisWithin_low_block[paramName]
-                
+
                 # --- Prepare to start Routine "low_val_imgs" ---
                 continueRoutine = True
                 # update component parameters for each repeat
@@ -996,7 +1003,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 low_val_img.setImage(image_file)
                 # Run 'Begin Routine' code from code_3
                 ### START ROUTINE SBASODI1 (LOW)
-                task_trigger(value="1", desc="Low Valence Image")
+                ut.task_trigger(value="3", port=port, outlet=outlet, desc="Low Valence Image")
+
                 ### END OF START ROUTINE CODE SBASODI1 (LOW)
                 # keep track of which components have finished
                 low_val_imgsComponents = [low_val_img]
@@ -1011,7 +1019,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 t = 0
                 _timeToFirstFrame = win.getFutureFlipTime(clock="now")
                 frameN = -1
-                
+
                 # --- Run Routine "low_val_imgs" ---
                 routineForceEnded = not continueRoutine
                 while continueRoutine and routineTimer.getTime() < 6.0:
@@ -1021,11 +1029,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
                     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
                     # update/draw components on each frame
-                    
+
                     # *low_val_img* updates
-                    
+
                     # if low_val_img is starting this frame...
-                    if low_val_img.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                    if low_val_img.status == NOT_STARTED and tThisFlip >= 0.0 - frameTolerance:
                         # keep track of start time/frame for later
                         low_val_img.frameNStart = frameN  # exact frame index
                         low_val_img.tStart = t  # local t and not account for scr refresh
@@ -1036,16 +1044,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         # update status
                         low_val_img.status = STARTED
                         low_val_img.setAutoDraw(True)
-                    
+
                     # if low_val_img is active this frame...
                     if low_val_img.status == STARTED:
                         # update params
                         pass
-                    
+
                     # if low_val_img is stopping this frame...
                     if low_val_img.status == STARTED:
                         # is it time to stop? (based on global clock, using actual start)
-                        if tThisFlipGlobal > low_val_img.tStartRefresh + 6-frameTolerance:
+                        if tThisFlipGlobal > low_val_img.tStartRefresh + 6 - frameTolerance:
                             # keep track of stop time/frame for later
                             low_val_img.tStop = t  # not accounting for scr refresh
                             low_val_img.tStopRefresh = tThisFlipGlobal  # on global time
@@ -1055,14 +1063,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                             # update status
                             low_val_img.status = FINISHED
                             low_val_img.setAutoDraw(False)
-                    
+
                     # check for quit (typically the Esc key)
                     if defaultKeyboard.getKeys(keyList=["escape"]):
                         thisExp.status = FINISHED
                     if thisExp.status == FINISHED or endExpNow:
                         endExperiment(thisExp, win=win)
                         return
-                    
+
                     # check if all components have finished
                     if not continueRoutine:  # a component has requested a forced-end of Routine
                         routineForceEnded = True
@@ -1072,11 +1080,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                             continueRoutine = True
                             break  # at least one component has not yet finished
-                    
+
                     # refresh the screen
                     if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                         win.flip()
-                
+
                 # --- Ending Routine "low_val_imgs" ---
                 for thisComponent in low_val_imgsComponents:
                     if hasattr(thisComponent, "setAutoDraw"):
@@ -1084,15 +1092,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 thisExp.addData('low_val_imgs.stopped', globalClock.getTime(format='float'))
                 # Run 'End Routine' code from code_3
                 ### END ROUTINE SBASODI1 (LOW)
-                task_trigger(value="2", desc="Low Valence Image")
+                ut.task_trigger(value="4", port=port, outlet=outlet, desc="Low Valence Image")
+
                 ### END OF END ROUTINE CODE SBASODI1 (LOW)
-                
+
                 # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
                 if routineForceEnded:
                     routineTimer.reset()
                 else:
                     routineTimer.addTime(-6.000000)
-                
+
                 # --- Prepare to start Routine "low_blank" ---
                 continueRoutine = True
                 # update component parameters for each repeat
@@ -1110,7 +1119,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 t = 0
                 _timeToFirstFrame = win.getFutureFlipTime(clock="now")
                 frameN = -1
-                
+
                 # --- Run Routine "low_blank" ---
                 routineForceEnded = not continueRoutine
                 while continueRoutine and routineTimer.getTime() < 3.0:
@@ -1120,11 +1129,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
                     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
                     # update/draw components on each frame
-                    
+
                     # *low_blank_image* updates
-                    
+
                     # if low_blank_image is starting this frame...
-                    if low_blank_image.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                    if low_blank_image.status == NOT_STARTED and tThisFlip >= 0.0 - frameTolerance:
                         # keep track of start time/frame for later
                         low_blank_image.frameNStart = frameN  # exact frame index
                         low_blank_image.tStart = t  # local t and not account for scr refresh
@@ -1135,16 +1144,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         # update status
                         low_blank_image.status = STARTED
                         low_blank_image.setAutoDraw(True)
-                    
+
                     # if low_blank_image is active this frame...
                     if low_blank_image.status == STARTED:
                         # update params
                         pass
-                    
+
                     # if low_blank_image is stopping this frame...
                     if low_blank_image.status == STARTED:
                         # is it time to stop? (based on global clock, using actual start)
-                        if tThisFlipGlobal > low_blank_image.tStartRefresh + 3.0-frameTolerance:
+                        if tThisFlipGlobal > low_blank_image.tStartRefresh + 3.0 - frameTolerance:
                             # keep track of stop time/frame for later
                             low_blank_image.tStop = t  # not accounting for scr refresh
                             low_blank_image.tStopRefresh = tThisFlipGlobal  # on global time
@@ -1154,14 +1163,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                             # update status
                             low_blank_image.status = FINISHED
                             low_blank_image.setAutoDraw(False)
-                    
+
                     # check for quit (typically the Esc key)
                     if defaultKeyboard.getKeys(keyList=["escape"]):
                         thisExp.status = FINISHED
                     if thisExp.status == FINISHED or endExpNow:
                         endExperiment(thisExp, win=win)
                         return
-                    
+
                     # check if all components have finished
                     if not continueRoutine:  # a component has requested a forced-end of Routine
                         routineForceEnded = True
@@ -1171,11 +1180,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                             continueRoutine = True
                             break  # at least one component has not yet finished
-                    
+
                     # refresh the screen
                     if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                         win.flip()
-                
+
                 # --- Ending Routine "low_blank" ---
                 for thisComponent in low_blankComponents:
                     if hasattr(thisComponent, "setAutoDraw"):
@@ -1187,22 +1196,22 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 else:
                     routineTimer.addTime(-3.000000)
                 thisExp.nextEntry()
-                
+
                 if thisSession is not None:
                     # if running in a Session with a Liaison client, send data up to now
                     thisSession.sendExperimentData()
             # completed 1.0 repeats of 'within_low_block'
-            
-            
+
             # --- Prepare to start Routine "low_fixation_cross" ---
             continueRoutine = True
             # update component parameters for each repeat
             thisExp.addData('low_fixation_cross.started', globalClock.getTime(format='float'))
             # Run 'Begin Routine' code from code_5
             ### START ROUTINE SBASODI1 (LOW_FIXATION)
-            task_trigger(value="3", desc="Low Fixation Image")
+            ut.task_trigger(value="5", port=port, outlet=outlet, desc="Low Fixation Image")
+
             ### START OF END ROUTINE CODE SBASODI1 (LOW_FIXATION)
-            
+
             # keep track of which components have finished
             low_fixation_crossComponents = [low_fixation_img]
             for thisComponent in low_fixation_crossComponents:
@@ -1216,7 +1225,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             t = 0
             _timeToFirstFrame = win.getFutureFlipTime(clock="now")
             frameN = -1
-            
+
             # --- Run Routine "low_fixation_cross" ---
             routineForceEnded = not continueRoutine
             while continueRoutine and routineTimer.getTime() < 13.0:
@@ -1226,11 +1235,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 tThisFlipGlobal = win.getFutureFlipTime(clock=None)
                 frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
                 # update/draw components on each frame
-                
+
                 # *low_fixation_img* updates
-                
+
                 # if low_fixation_img is starting this frame...
-                if low_fixation_img.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                if low_fixation_img.status == NOT_STARTED and tThisFlip >= 0.0 - frameTolerance:
                     # keep track of start time/frame for later
                     low_fixation_img.frameNStart = frameN  # exact frame index
                     low_fixation_img.tStart = t  # local t and not account for scr refresh
@@ -1241,16 +1250,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update status
                     low_fixation_img.status = STARTED
                     low_fixation_img.setAutoDraw(True)
-                
+
                 # if low_fixation_img is active this frame...
                 if low_fixation_img.status == STARTED:
                     # update params
                     pass
-                
+
                 # if low_fixation_img is stopping this frame...
                 if low_fixation_img.status == STARTED:
                     # is it time to stop? (based on global clock, using actual start)
-                    if tThisFlipGlobal > low_fixation_img.tStartRefresh + 13-frameTolerance:
+                    if tThisFlipGlobal > low_fixation_img.tStartRefresh + 13 - frameTolerance:
                         # keep track of stop time/frame for later
                         low_fixation_img.tStop = t  # not accounting for scr refresh
                         low_fixation_img.tStopRefresh = tThisFlipGlobal  # on global time
@@ -1260,14 +1269,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         # update status
                         low_fixation_img.status = FINISHED
                         low_fixation_img.setAutoDraw(False)
-                
+
                 # check for quit (typically the Esc key)
                 if defaultKeyboard.getKeys(keyList=["escape"]):
                     thisExp.status = FINISHED
                 if thisExp.status == FINISHED or endExpNow:
                     endExperiment(thisExp, win=win)
                     return
-                
+
                 # check if all components have finished
                 if not continueRoutine:  # a component has requested a forced-end of Routine
                     routineForceEnded = True
@@ -1277,11 +1286,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                         continueRoutine = True
                         break  # at least one component has not yet finished
-                
+
                 # refresh the screen
                 if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                     win.flip()
-            
+
             # --- Ending Routine "low_fixation_cross" ---
             for thisComponent in low_fixation_crossComponents:
                 if hasattr(thisComponent, "setAutoDraw"):
@@ -1289,7 +1298,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             thisExp.addData('low_fixation_cross.stopped', globalClock.getTime(format='float'))
             # Run 'End Routine' code from code_5
             ### END ROUTINE SBASODI1 (LOW_FIXATION)
-            task_trigger(value="4", desc="Low Fixation Image")
+            ut.task_trigger(value="6", port=port, outlet=outlet, desc="Low Fixation Image")
+
             ### END OF END ROUTINE CODE SBASODI1 (LOW_FIXATION)
             # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
             if routineForceEnded:
@@ -1297,20 +1307,19 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             else:
                 routineTimer.addTime(-13.000000)
             thisExp.nextEntry()
-            
+
             if thisSession is not None:
                 # if running in a Session with a Liaison client, send data up to now
                 thisSession.sendExperimentData()
         # completed low_nReps repeats of 'low_block'
-        
+
         thisExp.nextEntry()
-        
+
         if thisSession is not None:
             # if running in a Session with a Liaison client, send data up to now
             thisSession.sendExperimentData()
     # completed 12.0 repeats of 'block_repeat'
-    
-    
+
     # mark experiment as finished
     endExperiment(thisExp, win=win)
 
@@ -1318,11 +1327,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
 def saveData(thisExp):
     """
     Save data from this experiment
-    
+
     Parameters
     ==========
     thisExp : psychopy.data.ExperimentHandler
-        Handler object for this experiment, contains the data to save and information about 
+        Handler object for this experiment, contains the data to save and information about
         where to save it to.
     """
     filename = thisExp.dataFileName
@@ -1334,13 +1343,13 @@ def saveData(thisExp):
 def endExperiment(thisExp, win=None):
     """
     End this experiment, performing final shut down operations.
-    
+
     This function does NOT close the window or end the Python process - use `quit` for this.
-    
+
     Parameters
     ==========
     thisExp : psychopy.data.ExperimentHandler
-        Handler object for this experiment, contains the data to save and information about 
+        Handler object for this experiment, contains the data to save and information about
         where to save it to.
     win : psychopy.visual.Window
         Window for this experiment.
@@ -1348,7 +1357,7 @@ def endExperiment(thisExp, win=None):
     if win is not None:
         # remove autodraw from all current components
         win.clearAutoDraw()
-        # Flip one final time so any remaining win.callOnFlip() 
+        # Flip one final time so any remaining win.callOnFlip()
         # and win.timeOnFlip() tasks get executed
         win.flip()
     # mark experiment handler as finished
@@ -1362,7 +1371,7 @@ def endExperiment(thisExp, win=None):
 def quit(thisExp, win=None, thisSession=None):
     """
     Fully quit, closing the window and ending the Python process.
-    
+
     Parameters
     ==========
     win : psychopy.visual.Window
@@ -1395,11 +1404,17 @@ if __name__ == '__main__':
     logFile = setupLogging(filename=thisExp.dataFileName)
     win = setupWindow(expInfo=expInfo)
     setupDevices(expInfo=expInfo, thisExp=thisExp, win=win)
+
+    port, outlet, rcs, rcs_recording_flag = ut.eeg_setup(expName, expInfo.get('participant'))
+
     run(
-        expInfo=expInfo, 
-        thisExp=thisExp, 
+        expInfo=expInfo,
+        thisExp=thisExp,
         win=win,
         globalClock='float'
     )
+
+    ut.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
+
     saveData(thisExp=thisExp)
     quit(thisExp=thisExp, win=win)

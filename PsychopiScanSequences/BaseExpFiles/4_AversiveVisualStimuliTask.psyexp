@@ -128,14 +128,14 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="### START ROUTINE SBASODI1 (HIGH)&amp;#10;task_trigger(value=&quot;1&quot;, desc=&quot;High Valence Image&quot;)&amp;#10;### END OF START ROUTINE CODE SBASODI1 (HIGH)" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="### START ROUTINE SBASODI1 (HIGH)&amp;#10;ut.task_trigger(value=&quot;3&quot;, port=port, outlet=outlet, desc=&quot;High Valence Image&quot;)&amp;#10;### END OF START ROUTINE CODE SBASODI1 (HIGH)" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="### END ROUTINE SBASODI1 (HIGH)&amp;#10;task_trigger(value=&quot;2&quot;, desc=&quot;High Valence Image&quot;)&amp;#10;### END OF END ROUTINE CODE SBASODI1 (HIGH)&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="### END ROUTINE SBASODI1 (HIGH)&amp;#10;ut.task_trigger(value=&quot;4&quot;, port=port, outlet=outlet, desc=&quot;High Valence Image&quot;)&amp;#10;### END OF END ROUTINE CODE SBASODI1 (HIGH)&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -190,14 +190,14 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="console.log(&quot;1&quot;);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="### START ROUTINE SBASODI1 (LOW)&amp;#10;task_trigger(value=&quot;1&quot;, desc=&quot;Low Valence Image&quot;)&amp;#10;### END OF START ROUTINE CODE SBASODI1 (LOW)" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="### START ROUTINE SBASODI1 (LOW)&amp;#10;ut.task_trigger(value=&quot;3&quot;, port=port, outlet=outlet, desc=&quot;Low Valence Image&quot;)&amp;#10;&amp;#10;### END OF START ROUTINE CODE SBASODI1 (LOW)" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="console.log(&quot;2&quot;);&amp;#10;" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="### END ROUTINE SBASODI1 (LOW)&amp;#10;task_trigger(value=&quot;2&quot;, desc=&quot;Low Valence Image&quot;)&amp;#10;### END OF END ROUTINE CODE SBASODI1 (LOW)&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="### END ROUTINE SBASODI1 (LOW)&amp;#10;ut.task_trigger(value=&quot;4&quot;, port=port, outlet=outlet, desc=&quot;Low Valence Image&quot;)&amp;#10;&amp;#10;### END OF END ROUTINE CODE SBASODI1 (LOW)&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code_3" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -219,7 +219,7 @@
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
       <CodeComponent name="code_2" plugin="None">
-        <Param val="import numpy as np&amp;#10;import random&amp;#10;&amp;#10;high_imgs_order=np.random.permutation(18).reshape((6,3)).tolist()&amp;#10;&amp;#10;low_imgs_order=np.random.permutation(18).reshape((6,3)).tolist()&amp;#10;&amp;#10;blocks = ['H']*6 + ['L']*6&amp;#10;random.shuffle(blocks)&amp;#10;global high_nReps&amp;#10;global low_nReps&amp;#10;high_nReps = 1&amp;#10;low_nReps = 0&amp;#10;&amp;#10;if blocks[0] == 'L':&amp;#10;    high_nReps = 0&amp;#10;    low_nReps = 1&amp;#10;    &amp;#10;def task_trigger(value, desc=&quot;&quot;):&amp;#10;    print(value)" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="import numpy as np&amp;#10;import random&amp;#10;import utils as ut&amp;#10;&amp;#10;high_imgs_order=np.random.permutation(18).reshape((6,3)).tolist()&amp;#10;&amp;#10;low_imgs_order=np.random.permutation(18).reshape((6,3)).tolist()&amp;#10;&amp;#10;blocks = ['H']*6 + ['L']*6&amp;#10;#Code to make sure all Low valence or high valence do not appear together&amp;#10;while (''.join(blocks) == 'HHHHHHLLLLLL' or ''.join(blocks) == 'LLLLLLHHHHHH') :&amp;#10;    random.shuffle(blocks)&amp;#10;&amp;#10;global high_nReps&amp;#10;global low_nReps&amp;#10;high_nReps = 1&amp;#10;low_nReps = 0&amp;#10;&amp;#10;if blocks[0] == 'L':&amp;#10;    high_nReps = 0&amp;#10;    low_nReps = 1&amp;#10;" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
         <Param val="global high_nReps&amp;#10;global low_nReps" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="/* Syntax Error: Fix Python code */" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
@@ -286,14 +286,14 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="console.log(&quot;3&quot;);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="### START ROUTINE SBASODI1 (HIGH_FIXATION)&amp;#10;task_trigger(value=&quot;3&quot;, desc=&quot;High Fixation Image&quot;)&amp;#10;### START OF END ROUTINE CODE SBASODI1 (HIGH_FIXATION)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="### START ROUTINE SBASODI1 (HIGH_FIXATION)&amp;#10;ut.task_trigger(value=&quot;5&quot;, port=port, outlet=outlet, desc=&quot;High Fixation Image&quot;)&amp;#10;&amp;#10;### START OF END ROUTINE CODE SBASODI1 (HIGH_FIXATION)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="### END ROUTINE SBASODI1 (HIGH_FIXATION)&amp;#10;task_trigger(value=&quot;4&quot;, desc=&quot;High Fixation Image&quot;)&amp;#10;### END OF END ROUTINE CODE SBASODI1 (HIGH_FIXATION)&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="### END ROUTINE SBASODI1 (HIGH_FIXATION)&amp;#10;ut.task_trigger(value=&quot;6&quot;, port=port, outlet=outlet, desc=&quot;High Fixation Image&quot;)&amp;#10;&amp;#10;### END OF END ROUTINE CODE SBASODI1 (HIGH_FIXATION)&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code_4" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -348,14 +348,14 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="### START ROUTINE SBASODI1 (LOW_FIXATION)&amp;#10;task_trigger(value=&quot;3&quot;, desc=&quot;Low Fixation Image&quot;)&amp;#10;### START OF END ROUTINE CODE SBASODI1 (LOW_FIXATION)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="### START ROUTINE SBASODI1 (LOW_FIXATION)&amp;#10;ut.task_trigger(value=&quot;5&quot;, port=port, outlet=outlet, desc=&quot;Low Fixation Image&quot;)&amp;#10;&amp;#10;### START OF END ROUTINE CODE SBASODI1 (LOW_FIXATION)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="### END ROUTINE SBASODI1 (LOW_FIXATION)&amp;#10;task_trigger(value=&quot;4&quot;, desc=&quot;Low Fixation Image&quot;)&amp;#10;### END OF END ROUTINE CODE SBASODI1 (LOW_FIXATION)" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="### END ROUTINE SBASODI1 (LOW_FIXATION)&amp;#10;ut.task_trigger(value=&quot;6&quot;, port=port, outlet=outlet, desc=&quot;Low Fixation Image&quot;)&amp;#10;&amp;#10;### END OF END ROUTINE CODE SBASODI1 (LOW_FIXATION)" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code_5" valType="code" updates="None" name="name"/>
       </CodeComponent>

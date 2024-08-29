@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Sun Jul 28 19:46:09 2024
+    on Tue Aug 27 17:01:35 2024
 If you publish work using this script the most relevant publication is:
 
-    Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
-        PsychoPy2: Experiments in behavior made easy Behav Res 51: 195. 
+    Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019)
+        PsychoPy2: Experiments in behavior made easy Behav Res 51: 195.
         https://doi.org/10.3758/s13428-018-01193-y
 
 """
@@ -33,6 +33,10 @@ import sys  # to get file system encoding
 
 import psychopy.iohub as io
 from psychopy.hardware import keyboard
+
+# Run 'Before Experiment' code from code
+##BEFORE EXPERIMENT
+import utils as ut
 
 # --- Setup global variables (available in all functions) ---
 # create a device manager to handle hardware (keyboards, mice, mirophones, speakers, etc.)
@@ -397,6 +401,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     thisExp.addData('trial.started', globalClock.getTime(format='float'))
+    # Run 'Begin Routine' code from code
+    ### START ROUTINE SBASODI1 (FIXATION)
+    ut.task_trigger(value="13", port=port, outlet=outlet, desc="Meditation Image")
+
     # keep track of which components have finished
     trialComponents = [rs_cross]
     for thisComponent in trialComponents:
@@ -481,6 +489,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     thisExp.addData('trial.stopped', globalClock.getTime(format='float'))
+    # Run 'End Routine' code from code
+    ### END ROUTINE SBASODI1 (HIGH_FIXATION)
+    ut.task_trigger(value="14", port=port, outlet=outlet, desc="Meditation Image")
+
     # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
     if routineForceEnded:
         routineTimer.reset()
@@ -572,11 +584,18 @@ if __name__ == '__main__':
     logFile = setupLogging(filename=thisExp.dataFileName)
     win = setupWindow(expInfo=expInfo)
     setupDevices(expInfo=expInfo, thisExp=thisExp, win=win)
+
+    port, outlet, rcs, rcs_recording_flag = ut.eeg_setup(expName, expInfo.get('participant'))
+
     run(
         expInfo=expInfo,
         thisExp=thisExp,
         win=win,
         globalClock='float'
     )
+
+    ut.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
+
     saveData(thisExp=thisExp)
+
     quit(thisExp=thisExp, win=win)
