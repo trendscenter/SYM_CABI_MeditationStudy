@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Tue Aug 27 17:24:32 2024
+    on Mon Sep 16 12:17:58 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019)
@@ -36,7 +36,7 @@ from psychopy.hardware import keyboard
 
 # Run 'Before Experiment' code from code
 ##BEFORE EXPERIMENT
-import utils as ut
+import my_eeg_fmri_helper_functions as hf
 
 # --- Setup global variables (available in all functions) ---
 # create a device manager to handle hardware (keyboards, mice, mirophones, speakers, etc.)
@@ -359,7 +359,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
 
     # Start Code - component code to be run after the window creation
 
-    # --- Initialize components for Routine "trial" ---
+    # --- Initialize components for Routine "dummy_start" ---
+    text = visual.TextStim(win=win, name='text',
+                           text=None,
+                           font='Arial',
+                           pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0,
+                           color='white', colorSpace='rgb', opacity=None,
+                           languageStyle='LTR',
+                           depth=0.0);
+
+    # --- Initialize components for Routine "slow_breathing_video" ---
     breathing_video = visual.MovieStim(
         win, name='breathing_video',
         filename='./videos/SYM_BreathingVideoEdited.mp4', movieLib='ffpyplayer',
@@ -407,18 +416,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         format='%Y-%m-%d %Hh%M.%S.%f %z', fractionalSecondDigits=6
     )
 
-    # --- Prepare to start Routine "trial" ---
+    # --- Prepare to start Routine "dummy_start" ---
     continueRoutine = True
     # update component parameters for each repeat
-    thisExp.addData('trial.started', globalClock.getTime(format='float'))
-    # Run 'Begin Routine' code from code
-    # Before Routine
-    ### START ROUTINE SBASODI1 (VIDEO START)
-    ut.task_trigger(value="9", port=port, outlet=outlet, desc="Video start")
-
+    thisExp.addData('dummy_start.started', globalClock.getTime(format='float'))
     # keep track of which components have finished
-    trialComponents = [breathing_video]
-    for thisComponent in trialComponents:
+    dummy_startComponents = [text]
+    for thisComponent in dummy_startComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
         thisComponent.tStartRefresh = None
@@ -430,7 +434,107 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     _timeToFirstFrame = win.getFutureFlipTime(clock="now")
     frameN = -1
 
-    # --- Run Routine "trial" ---
+    # --- Run Routine "dummy_start" ---
+    routineForceEnded = not continueRoutine
+    while continueRoutine and routineTimer.getTime() < 30.0:
+        # get current time
+        t = routineTimer.getTime()
+        tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+
+        # *text* updates
+
+        # if text is starting this frame...
+        if text.status == NOT_STARTED and tThisFlip >= 0.0 - frameTolerance:
+            # keep track of start time/frame for later
+            text.frameNStart = frameN  # exact frame index
+            text.tStart = t  # local t and not account for scr refresh
+            text.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(text, 'tStartRefresh')  # time at next scr refresh
+            # add timestamp to datafile
+            thisExp.timestampOnFlip(win, 'text.started')
+            # update status
+            text.status = STARTED
+            text.setAutoDraw(True)
+
+        # if text is active this frame...
+        if text.status == STARTED:
+            # update params
+            pass
+
+        # if text is stopping this frame...
+        if text.status == STARTED:
+            # is it time to stop? (based on global clock, using actual start)
+            if tThisFlipGlobal > text.tStartRefresh + 30 - frameTolerance:
+                # keep track of stop time/frame for later
+                text.tStop = t  # not accounting for scr refresh
+                text.tStopRefresh = tThisFlipGlobal  # on global time
+                text.frameNStop = frameN  # exact frame index
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'text.stopped')
+                # update status
+                text.status = FINISHED
+                text.setAutoDraw(False)
+
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=["escape"]):
+            thisExp.status = FINISHED
+        if thisExp.status == FINISHED or endExpNow:
+            endExperiment(thisExp, win=win)
+            return
+
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            routineForceEnded = True
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in dummy_startComponents:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+
+    # --- Ending Routine "dummy_start" ---
+    for thisComponent in dummy_startComponents:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    thisExp.addData('dummy_start.stopped', globalClock.getTime(format='float'))
+    # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+    if routineForceEnded:
+        routineTimer.reset()
+    else:
+        routineTimer.addTime(-30.000000)
+    thisExp.nextEntry()
+
+    # --- Prepare to start Routine "slow_breathing_video" ---
+    continueRoutine = True
+    # update component parameters for each repeat
+    thisExp.addData('slow_breathing_video.started', globalClock.getTime(format='float'))
+    # Run 'Begin Routine' code from code
+    # Before Routine
+    ### START ROUTINE SBASODI1 (VIDEO START)
+    hf.task_trigger(value="9", port=port, outlet=outlet, desc="Video start")
+
+    # keep track of which components have finished
+    slow_breathing_videoComponents = [breathing_video]
+    for thisComponent in slow_breathing_videoComponents:
+        thisComponent.tStart = None
+        thisComponent.tStop = None
+        thisComponent.tStartRefresh = None
+        thisComponent.tStopRefresh = None
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    # reset timers
+    t = 0
+    _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+    frameN = -1
+
+    # --- Run Routine "slow_breathing_video" ---
     routineForceEnded = not continueRoutine
     while continueRoutine and routineTimer.getTime() < 242.0:
         # get current time
@@ -443,7 +547,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # *breathing_video* updates
 
         # if breathing_video is starting this frame...
-        if breathing_video.status == NOT_STARTED and tThisFlip >= 0.0 - frameTolerance:
+        if breathing_video.status == NOT_STARTED and tThisFlip >= 0 - frameTolerance:
             # keep track of start time/frame for later
             breathing_video.frameNStart = frameN  # exact frame index
             breathing_video.tStart = t  # local t and not account for scr refresh
@@ -483,7 +587,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             routineForceEnded = True
             break
         continueRoutine = False  # will revert to True if at least one component still running
-        for thisComponent in trialComponents:
+        for thisComponent in slow_breathing_videoComponents:
             if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                 continueRoutine = True
                 break  # at least one component has not yet finished
@@ -492,16 +596,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
             win.flip()
 
-    # --- Ending Routine "trial" ---
-    for thisComponent in trialComponents:
+    # --- Ending Routine "slow_breathing_video" ---
+    for thisComponent in slow_breathing_videoComponents:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
-    thisExp.addData('trial.stopped', globalClock.getTime(format='float'))
+    thisExp.addData('slow_breathing_video.stopped', globalClock.getTime(format='float'))
     breathing_video.stop()  # ensure movie has stopped at end of Routine
     # Run 'End Routine' code from code
     # End Routine
     ### END ROUTINE SBASODI1 (VIDEO END)
-    ut.task_trigger(value="10", port=port, outlet=outlet, desc="Video end")
+    hf.task_trigger(value="10", port=port, outlet=outlet, desc="Video end")
 
     # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
     if routineForceEnded:
@@ -517,7 +621,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # Run 'Begin Routine' code from code_2
     # Before Routine
     ### START ROUTINE SBASODI1 (Breathing Image)
-    ut.task_trigger(value="11", port=port, outlet=outlet, desc="Breathing Image")
+    hf.task_trigger(value="11", port=port, outlet=outlet, desc="Breathing Image")
 
     # keep track of which components have finished
     slow_breathing_imageComponents = [image_1]
@@ -535,7 +639,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
 
     # --- Run Routine "slow_breathing_image" ---
     routineForceEnded = not continueRoutine
-    while continueRoutine and routineTimer.getTime() < 240.0:
+    while continueRoutine and routineTimer.getTime() < 208.0:
         # get current time
         t = routineTimer.getTime()
         tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -566,7 +670,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # if image_1 is stopping this frame...
         if image_1.status == STARTED:
             # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > image_1.tStartRefresh + 240 - frameTolerance:
+            if tThisFlipGlobal > image_1.tStartRefresh + 208 - frameTolerance:
                 # keep track of stop time/frame for later
                 image_1.tStop = t  # not accounting for scr refresh
                 image_1.tStopRefresh = tThisFlipGlobal  # on global time
@@ -606,13 +710,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # Run 'End Routine' code from code_2
     # End Routine
     ### END ROUTINE SBASODI1 (Breathing Image)
-    ut.task_trigger(value="12", port=port, outlet=outlet, desc="Breathing Image")
+    hf.task_trigger(value="12", port=port, outlet=outlet, desc="Breathing Image")
 
     # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
     if routineForceEnded:
         routineTimer.reset()
     else:
-        routineTimer.addTime(-240.000000)
+        routineTimer.addTime(-208.000000)
     thisExp.nextEntry()
 
     # mark experiment as finished
@@ -699,8 +803,7 @@ if __name__ == '__main__':
     logFile = setupLogging(filename=thisExp.dataFileName)
     win = setupWindow(expInfo=expInfo)
     setupDevices(expInfo=expInfo, thisExp=thisExp, win=win)
-
-    port, outlet, rcs, rcs_recording_flag = ut.eeg_setup(expName, expInfo.get('participant'))
+    port, outlet, rcs, rcs_recording_flag = hf.eeg_setup(expName, expInfo.get('participant'))
 
     run(
         expInfo=expInfo,
@@ -708,8 +811,7 @@ if __name__ == '__main__':
         win=win,
         globalClock='float'
     )
-
-    ut.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
+    hf.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
 
     saveData(thisExp=thisExp)
     quit(thisExp=thisExp, win=win)

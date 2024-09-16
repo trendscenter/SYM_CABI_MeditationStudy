@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Tue Aug 27 17:01:35 2024
+    on Mon Sep 16 11:48:10 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019)
@@ -36,7 +36,7 @@ from psychopy.hardware import keyboard
 
 # Run 'Before Experiment' code from code
 ##BEFORE EXPERIMENT
-import utils as ut
+import my_eeg_fmri_helper_functions as hf
 
 # --- Setup global variables (available in all functions) ---
 # create a device manager to handle hardware (keyboards, mice, mirophones, speakers, etc.)
@@ -403,8 +403,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     thisExp.addData('trial.started', globalClock.getTime(format='float'))
     # Run 'Begin Routine' code from code
     ### START ROUTINE SBASODI1 (FIXATION)
-    ut.task_trigger(value="1", port=port, outlet=outlet, desc="Fixation Image")
-
+    hf.task_trigger(value="1", port=port, outlet=outlet, desc="Fixation Image")
     # keep track of which components have finished
     trialComponents = [rs_cross]
     for thisComponent in trialComponents:
@@ -421,7 +420,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
 
     # --- Run Routine "trial" ---
     routineForceEnded = not continueRoutine
-    while continueRoutine and routineTimer.getTime() < 500.0:
+    while continueRoutine and routineTimer.getTime() < 540.0:
         # get current time
         t = routineTimer.getTime()
         tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -452,7 +451,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # if rs_cross is stopping this frame...
         if rs_cross.status == STARTED:
             # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > rs_cross.tStartRefresh + 500 - frameTolerance:
+            if tThisFlipGlobal > rs_cross.tStartRefresh + 540 - frameTolerance:
                 # keep track of stop time/frame for later
                 rs_cross.tStop = t  # not accounting for scr refresh
                 rs_cross.tStopRefresh = tThisFlipGlobal  # on global time
@@ -491,13 +490,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     thisExp.addData('trial.stopped', globalClock.getTime(format='float'))
     # Run 'End Routine' code from code
     ### END ROUTINE SBASODI1 (HIGH_FIXATION)
-    ut.task_trigger(value="2", port=port, outlet=outlet, desc="Fixation Image")
-
+    hf.task_trigger(value="2", port=port, outlet=outlet, desc="Fixation Image")
     # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
     if routineForceEnded:
         routineTimer.reset()
     else:
-        routineTimer.addTime(-500.000000)
+        routineTimer.addTime(-540.000000)
     thisExp.nextEntry()
 
     # mark experiment as finished
@@ -585,7 +583,7 @@ if __name__ == '__main__':
     win = setupWindow(expInfo=expInfo)
     setupDevices(expInfo=expInfo, thisExp=thisExp, win=win)
 
-    port, outlet, rcs, rcs_recording_flag = ut.eeg_setup(expName, expInfo.get('participant'))
+    port, outlet, rcs, rcs_recording_flag = hf.eeg_setup(expName, expInfo.get('participant'))
 
     run(
         expInfo=expInfo,
@@ -593,9 +591,7 @@ if __name__ == '__main__':
         win=win,
         globalClock='float'
     )
-
-    ut.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
+    hf.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
 
     saveData(thisExp=thisExp)
-
     quit(thisExp=thisExp, win=win)

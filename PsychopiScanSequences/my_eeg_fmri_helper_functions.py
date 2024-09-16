@@ -68,8 +68,8 @@ def eeg_setup(expName, participant):
         return port, outlet, rcs, rcs_recording_flag
 
     else:
+        print(f'Not connected to server.. Called eeg_setup().. when connected to server, connects to RCS server and sets values for "PORT", "OUTLET", "RCS" and "rcs_recording_flag"')
         return "PORT", "OUTLET", "RCS", "rcs_recording_flag"
-
 
 
 def eeg_at_close(port, outlet, rcs, rcs_recording_flag):
@@ -85,7 +85,7 @@ def eeg_at_close(port, outlet, rcs, rcs_recording_flag):
 
         port.close()
     else:
-        print(f'Not connected to server.. Function which closes {port}, {rcs}, {outlet} and {rcs_recording_flag}')
+        print(f'Not connected to server.. Called eeg_at_close().. when connected to RCS server closes {port}, {rcs}, {outlet} and {rcs_recording_flag}')
 
 
 

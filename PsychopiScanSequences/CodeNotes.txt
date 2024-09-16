@@ -1,0 +1,65 @@
+TODOs:
+
+1. Remove frame rate message.
+    Possbile Options:
+    a) DIDNT WORK.. Probably set expInfo['frameRate']=60 which is the default frame rate in the code
+    b) Set a variable in the my_eeg_fmri_helper_functions.py and use that value in expInfo['frameRate']=60
+    c) Just remove the display message and let the rest of the code function as is..
+
+2. Check image sizes and video sizes on the screen
+3. Add subtitles to SYM Video
+4. Add banner to SYM Video (make it same as presentation)
+
+
+Coding COMPLETED BUT to test with RCS server:
+1. Make sure all aversive and non-aversive do not show consequetively
+2. Clicking Escape need to save eeg data; close rcs server before quitting
+3. Renamed utils.py --> sym_eeg_fmri_helper_functions.py
+4. Check if ESCAPE key saves EEG recording data and  closes all the relevant ports/server connections.
+5. Add 30s before starting the experiments
+6. Add 30 extra in the end after finishing experiments
+7. Check sleep() timings in RCS connections code.. if they work as expected
+
+#####################
+After generating python code from Psychopy.. need to make the following code additions manually
+
+Inside main() :
+
+1.  before run() method
+    port, outlet, rcs, rcs_recording_flag = hf.eeg_setup(expName, expInfo.get('participant'))
+
+2. after run() method
+    hf.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
+
+3. inside endExperiment() lastline (May not be needed.. just recheck after connecting with RCS Server)
+    hf.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
+
+######################################
+Base psychopy file for each python script along with the task trigger values.
+
+3_RestingState1.py:  (based on 3_RestingState1.psyexp)
+	Fixation cross (start -> 1 ;   end -> 2)
+	Duration:  540 sec (30s initial buffer + 480s tasktime + 30s end buffer)
+
+
+4_AversiveVisualStimuliTask.py (based on 4_AversiveVisualStimuliTask.psyexp)
+	Valence Image (start -> 3 ; end -> 4)
+	Fixation cross (start -> 5;  end -> 6)
+	Duration: 540 sec  (30s initial buffer + 480s tasktime + 30s end buffer)
+
+5_RestingState2.py  (based on 3_RestingState1.psyexp)
+	Fixation cross (start -> 7 ; end -> 8)
+	Duration:  540 sec (30s initial buffer + 480s tasktime + 30s end buffer)
+
+
+6_SlowBreathingSYMTask.py (based on 6_SlowBreathingSYMTask.psyexp)
+	SYM Video     (start -> 9 ; end -> 10)
+	Breathing Image (start -> 11 ; end -> 12)
+	Duration:  480 sec  (30s initial buffer + 242s video + 178s image + 30s end buffer)
+
+
+7_MeditativeThoughtlessEyesClosedState.py (based on 3_RestingState1.psyexp)
+	Meditation Mesg Image (start -> 13 ; end -> 14)
+	Duration:  540 sec (30s initial buffer + 480s tasktime + 30s end buffer)
+
+
