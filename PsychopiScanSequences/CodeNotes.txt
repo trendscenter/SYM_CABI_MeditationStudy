@@ -5,6 +5,13 @@ TODOs:
     a) DIDNT WORK.. Probably set expInfo['frameRate']=60 which is the default frame rate in the code
     b) Set a variable in the my_eeg_fmri_helper_functions.py and use that value in expInfo['frameRate']=60
     c) Just remove the display message and let the rest of the code function as is..
+    https://discourse.psychopy.org/t/is-there-a-way-to-skip-frame-rate-measurement-on-each-initialisation/36232/12
+    https://discourse.psychopy.org/t/removing-attempting-to-measure-frame-rate-of-screen-please-wait-message/37435/4
+
+    Currently, there seems to a bug in the code.. Discuss with Krishna and make changes as follows:
+        a) Set a variable in my_eeg_fmri_helper_functions.py (PSYCHOPY_EXP_DEFAULT_FRAMERATE=60) and use the following
+           line where it is checking in code mentioned in quotes " if win._monitorFrameRate is None:"
+            win._monitorFrameRate=hf.PSYCHOPY_EXP_DEFAULT_FRAMERATE
 
 2. Check image sizes and video sizes on the screen
 3. Add subtitles to SYM Video
@@ -14,7 +21,7 @@ TODOs:
 Coding COMPLETED BUT to test with RCS server:
 1. Make sure all aversive and non-aversive do not show consequetively
 2. Clicking Escape need to save eeg data; close rcs server before quitting
-3. Renamed utils.py --> sym_eeg_fmri_helper_functions.py
+3. Renamed utils.py --> my_eeg_fmri_helper_functions.py
 4. Check if ESCAPE key saves EEG recording data and  closes all the relevant ports/server connections.
 5. Add 30s before starting the experiments
 6. Add 30 extra in the end after finishing experiments
