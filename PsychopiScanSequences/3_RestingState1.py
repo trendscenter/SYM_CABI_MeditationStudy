@@ -206,11 +206,14 @@ def setupWindow(expInfo=None, win=None):
         win.backgroundImage = ''
         win.backgroundFit = 'none'
         win.units = 'height'
+
+    win._monitorFrameRate = hf.PSYCHOPY_EXP_DEFAULT_FRAMERATE
     if expInfo is not None:
         # get/measure frame rate if not already in expInfo
         if win._monitorFrameRate is None:
             win.getActualFrameRate(infoMsg='Attempting to measure frame rate of screen, please wait...')
         expInfo['frameRate'] = win._monitorFrameRate
+    print("Current frameRate: "+expInfo['frameRate'])
     win.mouseVisible = False
     win.hideMessage()
     # show a visual indicator if we're in piloting mode

@@ -1,22 +1,8 @@
 TODOs:
-
-1. Remove frame rate message.
-    Possbile Options:
-    a) DIDNT WORK.. Probably set expInfo['frameRate']=60 which is the default frame rate in the code
-    b) Set a variable in the my_eeg_fmri_helper_functions.py and use that value in expInfo['frameRate']=60
-    c) Just remove the display message and let the rest of the code function as is..
-    https://discourse.psychopy.org/t/is-there-a-way-to-skip-frame-rate-measurement-on-each-initialisation/36232/12
-    https://discourse.psychopy.org/t/removing-attempting-to-measure-frame-rate-of-screen-please-wait-message/37435/4
-
-    Currently, there seems to a bug in the code.. Discuss with Krishna and make changes as follows:
-        a) Set a variable in my_eeg_fmri_helper_functions.py (PSYCHOPY_EXP_DEFAULT_FRAMERATE=60) and use the following
-           line where it is checking in code mentioned in quotes " if win._monitorFrameRate is None:"
-            win._monitorFrameRate=hf.PSYCHOPY_EXP_DEFAULT_FRAMERATE
-
-2. Check image sizes and video sizes on the screen
-3. Add subtitles to SYM Video
-4. Add banner to SYM Video (make it same as presentation)
-
+0. Currently testing EEG With 32-channel workspace. Need to change to 64-channel EEG Workspace during experiments.
+1. Check image sizes and video sizes on the screen
+2. Add subtitles to SYM Video
+3. Add banner to SYM Video (make it same as presentation)
 
 Coding COMPLETED BUT to test with RCS server:
 1. Make sure all aversive and non-aversive do not show consecutively
@@ -26,52 +12,75 @@ Coding COMPLETED BUT to test with RCS server:
 5. Add 30s before starting the experiments
 6. Add 120s extra in the end after finishing experiments
 7. Check sleep() timings in RCS connections code.. if they work as expected
+8. Removed frame rate message.
 
-#####################
+##################### Manual Code Changes #############
 After generating python code from Psychopy.. need to make the following code additions manually
 
-Inside main() :
 
-1.  before run() method
+1.  Inside main() : before run() method
     port, outlet, rcs, rcs_recording_flag = hf.eeg_setup(expName, expInfo.get('participant'))
 
-2. after run() method
+2. Inside main() : after run() method
     hf.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
 
-3. inside endExperiment() lastline (May not be needed.. just recheck after connecting with RCS Server)
+3. Search for 'if expInfo is not None' and place the following line just above the if statement
+    win._monitorFrameRate = hf.PSYCHOPY_EXP_DEFAULT_FRAMERATE
+
+4. Inside main() : inside endExperiment() lastline (May not be needed.. just recheck after connecting with RCS Server)
     hf.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
 
-######################################
+##################### Code timings overview #############
 Base psychopy file for each python script along with the task trigger values.
+
+TODO: Currently testing EEG With 32-channel workspace. Need to change to 64-channel EEG Workspace during actual experiments.
 
 3_RestingState1.py:  (based on 3_RestingState1.psyexp)
 	Fixation cross (start -> 1 ;   end -> 2)
 	Study Protocol: 480s tasktime (8 min)
-	Psychopy duration:  630s (30s initial buffer + 480s tasktime + 120s end buffer)
-
+	Psychopy duration:  630s (showing fixation cross entire duration - 30s initial buffer + 480s tasktime + 120s end buffer)
+	Order - StartPsychopy -> Within 30s start Scanner -> End scanner after 8min -> PressEscToEndPsychopy
 
 4_AversiveVisualStimuliTask.py (based on 4_AversiveVisualStimuliTask.psyexp)
 	Valence Image (start -> 3 ; end -> 4)
 	Fixation cross (start -> 5;  end -> 6)
 	Study Protocol: 480s tasktime (8 min)
-	Psychopy duration: 630s  (30s initial buffer + 480s tasktime + 120s end buffer)
+	Psychopy duration: 630s  (30s initial buffer (blank) + 480s tasktime (images/cross)+ 120s end buffer(blank))
+    Order - StartPsychopy -> Within 30s start Scanner -> End scanner after task images end and blank screen shows up -> PressEscToEndPsychopy
 
 5_RestingState2.py  (based on 3_RestingState1.psyexp)
 	Fixation cross (start -> 7 ; end -> 8)
 	Study Protocol: 480s tasktime (8 min)
-	Psychopy duration:  630s (30s initial buffer + 480s tasktime + 120s end buffer)
+	Psychopy duration:  630s (showing fixation cross entire duration - 30s initial buffer + 480s tasktime + 120s end buffer)
+    Order - StartPsychopy -> Within 30s start Scanner -> End scanner after 8min -> PressEscToEndPsychopy
 
 
 6_SlowBreathingSYMTask.py (based on 6_SlowBreathingSYMTask.psyexp)
 	SYM Video     (start -> 9 ; end -> 10)
 	Breathing Image (start -> 11 ; end -> 12)
 	Study Protocol: 420s tasktime (7 min)
-	Psychopy duration:  570s (30s initial buffer + 242s video + 178s image + 120s end buffer)
+	Psychopy duration:  570s (30s initial buffer (blank) + 242s video + 178s slow breathing image + 120s end buffer (blank))
+    Order - StartPsychopy -> Within 30s start Scanner -> End scanner task ends and blank screen shows up -> PressEscToEndPsychopy
 
 
 7_MeditativeThoughtlessEyesClosedState.py (based on 3_RestingState1.psyexp)
 	Meditation Mesg Image (start -> 13 ; end -> 14)
 	Study Protocol: 480s tasktime (8 min)
-	Duration:  630s (30s initial buffer + 480s tasktime + 120s end buffer)
+	Duration:  630s (showing meditation image entire duration - 30s initial buffer + 480s tasktime + 120s end buffer)
+    Order - StartPsychopy -> Within 30s start Scanner -> End scanner after 8 minutes -> PressEscToEndPsychopy
 
 
+##################### Other Notes #############
+Regarding frameRate message removal:
+    Currently, there seems to a bug in the code.. Discuss with Krishna and make changes as follows:
+        a) Set a variable in my_eeg_fmri_helper_functions.py (PSYCHOPY_EXP_DEFAULT_FRAMERATE=60) and use the following
+           line where it is checking in code mentioned in quotes "if expInfo is not None:"
+            win._monitorFrameRate=hf.PSYCHOPY_EXP_DEFAULT_FRAMERATE
+
+    Previously tried the following options:
+    a) DIDNT WORK.. Probably set expInfo['frameRate']=60 which is the default frame rate in the code
+    b) Set a variable in the my_eeg_fmri_helper_functions.py and use that value in expInfo['frameRate']
+    c) Just remove the display message and let the rest of the code function as is..
+    d) Online suggestions for this:
+    https://discourse.psychopy.org/t/is-there-a-way-to-skip-frame-rate-measurement-on-each-initialisation/36232/12
+    https://discourse.psychopy.org/t/removing-attempting-to-measure-frame-rate-of-screen-please-wait-message/37435/4

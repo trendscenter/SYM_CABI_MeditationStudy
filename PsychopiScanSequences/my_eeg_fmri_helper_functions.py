@@ -10,8 +10,12 @@ from psychopy.visual import Window, Rect
 from pylsl import StreamInfo, StreamOutlet
 import serial
 
+#This is the default value used in psychopy generated code incase it is not able to calculate the frame rate
+# If this variable is set to None, then it will call the frameRate computation module of Psychopy
+PSYCHOPY_EXP_DEFAULT_FRAMERATE = 60.0 #None
 
-CONNECT_TO_RCS_SERVER = False
+#TODO The following variable should be set to True during the actual data collection and False for testing without EEGServer
+CONNECT_TO_RCS_SERVER = True
 print(f'CONNECT_TO_RCS_SERVER : {CONNECT_TO_RCS_SERVER}')
 
 if not CONNECT_TO_RCS_SERVER:
