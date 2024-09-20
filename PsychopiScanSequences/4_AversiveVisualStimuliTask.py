@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Fri Sep 20 08:34:00 2024
+    on Fri Sep 20 12:53:29 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019)
@@ -457,14 +457,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         texRes=128.0, interpolate=True, depth=0.0)
 
     # --- Initialize components for Routine "dummy_end" ---
-    dummy_end_fixation_img = visual.ImageStim(
-        win=win,
-        name='dummy_end_fixation_img',
-        image='./images/fixation_cross.png', mask=None, anchor='center',
-        ori=0.0, pos=(0, 0), size=(1, 1),
-        color=[1, 1, 1], colorSpace='rgb', opacity=None,
-        flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=0.0)
+    text_2 = visual.TextStim(win=win, name='text_2',
+                             text=None,
+                             font='Arial',
+                             pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0,
+                             color='white', colorSpace='rgb', opacity=None,
+                             languageStyle='LTR',
+                             depth=0.0);
 
     # create some handy timers
 
@@ -1442,14 +1441,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     thisExp.addData('dummy_end.started', globalClock.getTime(format='float'))
-    # Run 'Begin Routine' code from code_6
-    ### START ROUTINE SBASODI1 (DUMMY_END_FIXATION)
-    hf.task_trigger(value="5", port=port, outlet=outlet, desc="Dummy end Fixation Image")
-
-    ### START OF END ROUTINE CODE SBASODI1 (DUMMY_END_FIXATION)
-
     # keep track of which components have finished
-    dummy_endComponents = [dummy_end_fixation_img]
+    dummy_endComponents = [text_2]
     for thisComponent in dummy_endComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -1472,39 +1465,39 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
 
-        # *dummy_end_fixation_img* updates
+        # *text_2* updates
 
-        # if dummy_end_fixation_img is starting this frame...
-        if dummy_end_fixation_img.status == NOT_STARTED and tThisFlip >= 0.0 - frameTolerance:
+        # if text_2 is starting this frame...
+        if text_2.status == NOT_STARTED and tThisFlip >= 0.0 - frameTolerance:
             # keep track of start time/frame for later
-            dummy_end_fixation_img.frameNStart = frameN  # exact frame index
-            dummy_end_fixation_img.tStart = t  # local t and not account for scr refresh
-            dummy_end_fixation_img.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(dummy_end_fixation_img, 'tStartRefresh')  # time at next scr refresh
+            text_2.frameNStart = frameN  # exact frame index
+            text_2.tStart = t  # local t and not account for scr refresh
+            text_2.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(text_2, 'tStartRefresh')  # time at next scr refresh
             # add timestamp to datafile
-            thisExp.timestampOnFlip(win, 'dummy_end_fixation_img.started')
+            thisExp.timestampOnFlip(win, 'text_2.started')
             # update status
-            dummy_end_fixation_img.status = STARTED
-            dummy_end_fixation_img.setAutoDraw(True)
+            text_2.status = STARTED
+            text_2.setAutoDraw(True)
 
-        # if dummy_end_fixation_img is active this frame...
-        if dummy_end_fixation_img.status == STARTED:
+        # if text_2 is active this frame...
+        if text_2.status == STARTED:
             # update params
             pass
 
-        # if dummy_end_fixation_img is stopping this frame...
-        if dummy_end_fixation_img.status == STARTED:
+        # if text_2 is stopping this frame...
+        if text_2.status == STARTED:
             # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > dummy_end_fixation_img.tStartRefresh + 120 - frameTolerance:
+            if tThisFlipGlobal > text_2.tStartRefresh + 120 - frameTolerance:
                 # keep track of stop time/frame for later
-                dummy_end_fixation_img.tStop = t  # not accounting for scr refresh
-                dummy_end_fixation_img.tStopRefresh = tThisFlipGlobal  # on global time
-                dummy_end_fixation_img.frameNStop = frameN  # exact frame index
+                text_2.tStop = t  # not accounting for scr refresh
+                text_2.tStopRefresh = tThisFlipGlobal  # on global time
+                text_2.frameNStop = frameN  # exact frame index
                 # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'dummy_end_fixation_img.stopped')
+                thisExp.timestampOnFlip(win, 'text_2.stopped')
                 # update status
-                dummy_end_fixation_img.status = FINISHED
-                dummy_end_fixation_img.setAutoDraw(False)
+                text_2.status = FINISHED
+                text_2.setAutoDraw(False)
 
         # check for quit (typically the Esc key)
         if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -1532,11 +1525,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     thisExp.addData('dummy_end.stopped', globalClock.getTime(format='float'))
-    # Run 'End Routine' code from code_6
-    ### END ROUTINE SBASODI1 (DUMMY_END_FIXATION)
-    hf.task_trigger(value="6", port=port, outlet=outlet, desc="Dummy end Fixation Image")
-
-    ### END OF END ROUTINE CODE SBASODI1 (DUMMY_END_FIXATION)
     # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
     if routineForceEnded:
         routineTimer.reset()

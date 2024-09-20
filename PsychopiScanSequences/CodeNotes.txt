@@ -14,22 +14,6 @@ Coding COMPLETED BUT to test with RCS server:
 7. Check sleep() timings in RCS connections code.. if they work as expected
 8. Removed frame rate message.
 
-##################### Manual Code Changes #############
-After generating python code from Psychopy.. need to make the following code additions manually
-
-
-1.  Inside main() : before run() method
-    port, outlet, rcs, rcs_recording_flag = hf.eeg_setup(expName, expInfo.get('participant'))
-
-2. Inside main() : after run() method
-    hf.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
-
-3. Search for 'if expInfo is not None' and place the following line just above the if statement
-    win._monitorFrameRate = hf.PSYCHOPY_EXP_DEFAULT_FRAMERATE
-
-4. Inside main() : inside endExperiment() lastline (May not be needed.. just recheck after connecting with RCS Server)
-    hf.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
-
 ##################### Code timings overview #############
 Base psychopy file for each python script along with the task trigger values.
 
@@ -68,6 +52,21 @@ TODO: Currently testing EEG With 32-channel workspace. Need to change to 64-chan
 	Study Protocol: 480s tasktime (8 min)
 	Duration:  630s (showing meditation image entire duration - 30s initial buffer + 480s tasktime + 120s end buffer)
     Order - StartPsychopy -> Within 30s start Scanner -> End scanner after 8 minutes -> PressEscToEndPsychopy
+
+##################### Manual Code Changes #############
+After generating python code from Psychopy.. need to make the following code additions manually
+
+1.  Inside main() : before run() method
+    port, outlet, rcs, rcs_recording_flag = hf.eeg_setup(expName, expInfo.get('participant'))
+
+2. Inside main() : after run() method
+    hf.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
+
+3. Search for 'if expInfo is not None' and place the following line just above the if statement
+    win._monitorFrameRate = hf.PSYCHOPY_EXP_DEFAULT_FRAMERATE
+
+4. Inside main() : inside endExperiment() lastline (May not be needed.. just recheck after connecting with RCS Server)
+    hf.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
 
 
 ##################### Other Notes #############
