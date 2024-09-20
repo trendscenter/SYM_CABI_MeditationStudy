@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Fri Sep 20 07:27:07 2024
+    on Fri Sep 20 08:34:00 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019)
@@ -47,6 +47,7 @@ blocks = ['H'] * 6 + ['L'] * 6
 # Code to make sure all Low valence or high valence do not appear together
 while (''.join(blocks) == 'HHHHHHLLLLLL' or ''.join(blocks) == 'LLLLLLHHHHHH'):
     random.shuffle(blocks)
+print(''.join(blocks))
 
 global high_nReps
 global low_nReps
@@ -378,17 +379,19 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
 
     # Start Code - component code to be run after the window creation
 
-    # --- Initialize components for Routine "dummy_test" ---
-    # Run 'Begin Experiment' code from code_2
-    global high_nReps
-    global low_nReps
+    # --- Initialize components for Routine "dummy_start_buffer_1" ---
     text = visual.TextStim(win=win, name='text',
                            text=None,
                            font='Arial',
                            pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0,
                            color='white', colorSpace='rgb', opacity=None,
                            languageStyle='LTR',
-                           depth=-1.0);
+                           depth=0.0);
+
+    # --- Initialize components for Routine "dummy_test" ---
+    # Run 'Begin Experiment' code from code_2
+    global high_nReps
+    global low_nReps
 
     # --- Initialize components for Routine "high_val_imgs" ---
     high_val_img = visual.ImageStim(
@@ -488,6 +491,101 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         format='%Y-%m-%d %Hh%M.%S.%f %z', fractionalSecondDigits=6
     )
 
+    # --- Prepare to start Routine "dummy_start_buffer_1" ---
+    continueRoutine = True
+    # update component parameters for each repeat
+    thisExp.addData('dummy_start_buffer_1.started', globalClock.getTime(format='float'))
+    # keep track of which components have finished
+    dummy_start_buffer_1Components = [text]
+    for thisComponent in dummy_start_buffer_1Components:
+        thisComponent.tStart = None
+        thisComponent.tStop = None
+        thisComponent.tStartRefresh = None
+        thisComponent.tStopRefresh = None
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    # reset timers
+    t = 0
+    _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+    frameN = -1
+
+    # --- Run Routine "dummy_start_buffer_1" ---
+    routineForceEnded = not continueRoutine
+    while continueRoutine and routineTimer.getTime() < 30.0:
+        # get current time
+        t = routineTimer.getTime()
+        tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+
+        # *text* updates
+
+        # if text is starting this frame...
+        if text.status == NOT_STARTED and tThisFlip >= 0.0 - frameTolerance:
+            # keep track of start time/frame for later
+            text.frameNStart = frameN  # exact frame index
+            text.tStart = t  # local t and not account for scr refresh
+            text.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(text, 'tStartRefresh')  # time at next scr refresh
+            # add timestamp to datafile
+            thisExp.timestampOnFlip(win, 'text.started')
+            # update status
+            text.status = STARTED
+            text.setAutoDraw(True)
+
+        # if text is active this frame...
+        if text.status == STARTED:
+            # update params
+            pass
+
+        # if text is stopping this frame...
+        if text.status == STARTED:
+            # is it time to stop? (based on global clock, using actual start)
+            if tThisFlipGlobal > text.tStartRefresh + 30 - frameTolerance:
+                # keep track of stop time/frame for later
+                text.tStop = t  # not accounting for scr refresh
+                text.tStopRefresh = tThisFlipGlobal  # on global time
+                text.frameNStop = frameN  # exact frame index
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'text.stopped')
+                # update status
+                text.status = FINISHED
+                text.setAutoDraw(False)
+
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=["escape"]):
+            thisExp.status = FINISHED
+        if thisExp.status == FINISHED or endExpNow:
+            endExperiment(thisExp, win=win)
+            return
+
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            routineForceEnded = True
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in dummy_start_buffer_1Components:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+
+    # --- Ending Routine "dummy_start_buffer_1" ---
+    for thisComponent in dummy_start_buffer_1Components:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    thisExp.addData('dummy_start_buffer_1.stopped', globalClock.getTime(format='float'))
+    # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+    if routineForceEnded:
+        routineTimer.reset()
+    else:
+        routineTimer.addTime(-30.000000)
+    thisExp.nextEntry()
+
     # set up handler to look after randomisation of conditions etc
     block_repeat = data.TrialHandler(nReps=12.0, method='sequential',
                                      extraInfo=expInfo, originPath=-1,
@@ -531,7 +629,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             raise Exception('Invalid block ID. It should be either "H" or "L"')
 
         # keep track of which components have finished
-        dummy_testComponents = [text]
+        dummy_testComponents = []
         for thisComponent in dummy_testComponents:
             thisComponent.tStart = None
             thisComponent.tStop = None
@@ -546,47 +644,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
 
         # --- Run Routine "dummy_test" ---
         routineForceEnded = not continueRoutine
-        while continueRoutine and routineTimer.getTime() < 30.0:
+        while continueRoutine:
             # get current time
             t = routineTimer.getTime()
             tThisFlip = win.getFutureFlipTime(clock=routineTimer)
             tThisFlipGlobal = win.getFutureFlipTime(clock=None)
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
-
-            # *text* updates
-
-            # if text is starting this frame...
-            if text.status == NOT_STARTED and tThisFlip >= 0.0 - frameTolerance:
-                # keep track of start time/frame for later
-                text.frameNStart = frameN  # exact frame index
-                text.tStart = t  # local t and not account for scr refresh
-                text.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(text, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'text.started')
-                # update status
-                text.status = STARTED
-                text.setAutoDraw(True)
-
-            # if text is active this frame...
-            if text.status == STARTED:
-                # update params
-                pass
-
-            # if text is stopping this frame...
-            if text.status == STARTED:
-                # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > text.tStartRefresh + 30 - frameTolerance:
-                    # keep track of stop time/frame for later
-                    text.tStop = t  # not accounting for scr refresh
-                    text.tStopRefresh = tThisFlipGlobal  # on global time
-                    text.frameNStop = frameN  # exact frame index
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'text.stopped')
-                    # update status
-                    text.status = FINISHED
-                    text.setAutoDraw(False)
 
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -614,11 +678,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
         thisExp.addData('dummy_test.stopped', globalClock.getTime(format='float'))
-        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
-        if routineForceEnded:
-            routineTimer.reset()
-        else:
-            routineTimer.addTime(-30.000000)
+        # the Routine "dummy_test" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
 
         # set up handler to look after randomisation of conditions etc
         high_block = data.TrialHandler(nReps=high_nReps, method='sequential',
