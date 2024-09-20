@@ -19,12 +19,12 @@ TODOs:
 
 
 Coding COMPLETED BUT to test with RCS server:
-1. Make sure all aversive and non-aversive do not show consequetively
+1. Make sure all aversive and non-aversive do not show consecutively
 2. Clicking Escape need to save eeg data; close rcs server before quitting
 3. Renamed utils.py --> my_eeg_fmri_helper_functions.py
 4. Check if ESCAPE key saves EEG recording data and  closes all the relevant ports/server connections.
 5. Add 30s before starting the experiments
-6. Add 30 extra in the end after finishing experiments
+6. Add 120s extra in the end after finishing experiments
 7. Check sleep() timings in RCS connections code.. if they work as expected
 
 #####################
@@ -46,27 +46,32 @@ Base psychopy file for each python script along with the task trigger values.
 
 3_RestingState1.py:  (based on 3_RestingState1.psyexp)
 	Fixation cross (start -> 1 ;   end -> 2)
-	Duration:  540 sec (30s initial buffer + 480s tasktime + 30s end buffer)
+	Study Protocol: 480s tasktime (8 min)
+	Psychopy duration:  630s (30s initial buffer + 480s tasktime + 120s end buffer)
 
 
 4_AversiveVisualStimuliTask.py (based on 4_AversiveVisualStimuliTask.psyexp)
 	Valence Image (start -> 3 ; end -> 4)
 	Fixation cross (start -> 5;  end -> 6)
-	Duration: 540 sec  (30s initial buffer + 480s tasktime + 30s end buffer)
+	Study Protocol: 480s tasktime (8 min)
+	Psychopy duration: 630s  (30s initial buffer + 480s tasktime + 120s end buffer)
 
 5_RestingState2.py  (based on 3_RestingState1.psyexp)
 	Fixation cross (start -> 7 ; end -> 8)
-	Duration:  540 sec (30s initial buffer + 480s tasktime + 30s end buffer)
+	Study Protocol: 480s tasktime (8 min)
+	Psychopy duration:  630s (30s initial buffer + 480s tasktime + 120s end buffer)
 
 
 6_SlowBreathingSYMTask.py (based on 6_SlowBreathingSYMTask.psyexp)
 	SYM Video     (start -> 9 ; end -> 10)
 	Breathing Image (start -> 11 ; end -> 12)
-	Duration:  480 sec  (30s initial buffer + 242s video + 178s image + 30s end buffer)
+	Study Protocol: 420s tasktime (7 min)
+	Psychopy duration:  570s (30s initial buffer + 242s video + 178s image + 120s end buffer)
 
 
 7_MeditativeThoughtlessEyesClosedState.py (based on 3_RestingState1.psyexp)
 	Meditation Mesg Image (start -> 13 ; end -> 14)
-	Duration:  540 sec (30s initial buffer + 480s tasktime + 30s end buffer)
+	Study Protocol: 480s tasktime (8 min)
+	Duration:  630s (30s initial buffer + 480s tasktime + 120s end buffer)
 
 

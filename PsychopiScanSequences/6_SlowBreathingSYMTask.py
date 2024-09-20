@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Mon Sep 16 12:17:58 2024
+    on Fri Sep 20 07:37:09 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019)
@@ -639,7 +639,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
 
     # --- Run Routine "slow_breathing_image" ---
     routineForceEnded = not continueRoutine
-    while continueRoutine and routineTimer.getTime() < 208.0:
+    while continueRoutine and routineTimer.getTime() < 298.0:
         # get current time
         t = routineTimer.getTime()
         tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -670,7 +670,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # if image_1 is stopping this frame...
         if image_1.status == STARTED:
             # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > image_1.tStartRefresh + 208 - frameTolerance:
+            if tThisFlipGlobal > image_1.tStartRefresh + 298 - frameTolerance:
                 # keep track of stop time/frame for later
                 image_1.tStop = t  # not accounting for scr refresh
                 image_1.tStopRefresh = tThisFlipGlobal  # on global time
@@ -716,7 +716,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     if routineForceEnded:
         routineTimer.reset()
     else:
-        routineTimer.addTime(-208.000000)
+        routineTimer.addTime(-298.000000)
     thisExp.nextEntry()
 
     # mark experiment as finished
@@ -803,6 +803,7 @@ if __name__ == '__main__':
     logFile = setupLogging(filename=thisExp.dataFileName)
     win = setupWindow(expInfo=expInfo)
     setupDevices(expInfo=expInfo, thisExp=thisExp, win=win)
+
     port, outlet, rcs, rcs_recording_flag = hf.eeg_setup(expName, expInfo.get('participant'))
 
     run(

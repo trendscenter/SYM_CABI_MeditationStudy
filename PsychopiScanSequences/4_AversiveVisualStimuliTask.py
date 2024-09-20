@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Mon Sep 16 12:38:58 2024
+    on Fri Sep 20 07:27:07 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019)
@@ -1400,7 +1400,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
 
     # --- Run Routine "dummy_end" ---
     routineForceEnded = not continueRoutine
-    while continueRoutine and routineTimer.getTime() < 30.0:
+    while continueRoutine and routineTimer.getTime() < 120.0:
         # get current time
         t = routineTimer.getTime()
         tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -1431,7 +1431,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # if dummy_end_fixation_img is stopping this frame...
         if dummy_end_fixation_img.status == STARTED:
             # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > dummy_end_fixation_img.tStartRefresh + 30 - frameTolerance:
+            if tThisFlipGlobal > dummy_end_fixation_img.tStartRefresh + 120 - frameTolerance:
                 # keep track of stop time/frame for later
                 dummy_end_fixation_img.tStop = t  # not accounting for scr refresh
                 dummy_end_fixation_img.tStopRefresh = tThisFlipGlobal  # on global time
@@ -1477,7 +1477,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     if routineForceEnded:
         routineTimer.reset()
     else:
-        routineTimer.addTime(-30.000000)
+        routineTimer.addTime(-120.000000)
     thisExp.nextEntry()
 
     # mark experiment as finished
