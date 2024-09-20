@@ -233,7 +233,8 @@ def setupWindow(expInfo=None, win=None):
         if win._monitorFrameRate is None:
             win.getActualFrameRate(infoMsg='Attempting to measure frame rate of screen, please wait...')
         expInfo['frameRate'] = win._monitorFrameRate
-    print("Current frameRate: "+expInfo['frameRate'])
+    print(f'Current frameRate: {expInfo["frameRate"]}')
+
     win.mouseVisible = False
     win.hideMessage()
     # show a visual indicator if we're in piloting mode
