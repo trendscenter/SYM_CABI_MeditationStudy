@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Wed Oct  2 23:45:06 2024
+    on Thu Oct  3 00:30:41 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019)
@@ -375,7 +375,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # --- Initialize components for Routine "slow_breathing_video" ---
     breathing_video = visual.MovieStim(
         win, name='breathing_video',
-        filename='./videos/SYM_BreathingVideoEdited.mp4', movieLib='ffpyplayer',
+        filename='./videos/SYM_BreathingVideoEdited_subtitles.mp4', movieLib='ffpyplayer',
         loop=False, volume=1.0, noAudio=False,
         pos=(0, 0), size=(1.6, 1), units=win.units,
         ori=0.0, anchor='center', opacity=None, contrast=1.0,
