@@ -18,6 +18,9 @@ PSYCHOPY_EXP_DEFAULT_FRAMERATE = 60.0 #None
 CONNECT_TO_RCS_SERVER = True
 print(f'CONNECT_TO_RCS_SERVER : {CONNECT_TO_RCS_SERVER}')
 
+CONNECT_TO_TEST_WORKSPACE=False
+print(f'CONNECT_TO_TEST_EEG_WORKSPACE : {CONNECT_TO_TEST_WORKSPACE}')
+
 if not CONNECT_TO_RCS_SERVER:
     print("You are not connected to RCS Server. This run with just print outputs.. ")
     #var = input("You are not connected to RCS Server. This run with just print outputs.. Do you want to continue [y|Y] : ")
@@ -26,10 +29,11 @@ if not CONNECT_TO_RCS_SERVER:
 
 
 def task_trigger(value, port, outlet, desc=""):
+    value_type=[int(value)]
     if  CONNECT_TO_RCS_SERVER:
-        port.write(value);outlet.push_sample(value);
+        port.write(value_type);outlet.push_sample(value_type);
     else:
-        print(value)
+        print(value_type)
 
 def eeg_setup(expName, participant):
     if CONNECT_TO_RCS_SERVER:
@@ -39,7 +43,8 @@ def eeg_setup(expName, participant):
         outlet = StreamOutlet(info)
 
         workspace = 'C:/Users/CABI Users/Desktop/user_experiments/calhoun/crest_tms/workspace_files/BrainCapMR_64channel_workspace.rwksp';
-        workspace = 'C:/Users/CABI Users/Desktop/user_experiments/calhoun/crest_tms/workspace_files/net32.rwksp';
+        if CONNECT_TO_TEST_WORKSPACE:
+            workspace = 'C:/Users/CABI Users/Desktop/user_experiments/calhoun/crest_tms/workspace_files/net32.rwksp';
 
         print('Participant is: ', participant);
         rcs = brainproducts.RemoteControlServer(host='143.215.238.204', timeout=20)
@@ -53,10 +58,11 @@ def eeg_setup(expName, participant):
         print(rcs.recordingState)
         time.sleep(2)
 
-        # Start test mode (sine waves and occasional triggers)
-        rcs.mode = 'test'
-        print(rcs.recordingState)
-        time.sleep(2)
+        if CONNECT_TO_TEST_WORKSPACE:
+            # Start test mode (sine waves and occasional triggers)
+            rcs.mode = 'test'
+            print(rcs.recordingState)
+            time.sleep(2)
 
         # Start impedance check mode
         rcs.mode = 'impedance'
