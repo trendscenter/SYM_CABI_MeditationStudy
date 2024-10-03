@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Fri Sep 20 07:17:00 2024
+    on Wed Oct  2 23:33:40 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019)
@@ -424,7 +424,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
 
     # --- Run Routine "trial" ---
     routineForceEnded = not continueRoutine
-    while continueRoutine and routineTimer.getTime() < 630.0:
+    while continueRoutine and routineTimer.getTime() < 610.0:
         # get current time
         t = routineTimer.getTime()
         tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -455,7 +455,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # if rs_cross is stopping this frame...
         if rs_cross.status == STARTED:
             # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > rs_cross.tStartRefresh + 630 - frameTolerance:
+            if tThisFlipGlobal > rs_cross.tStartRefresh + 610 - frameTolerance:
                 # keep track of stop time/frame for later
                 rs_cross.tStop = t  # not accounting for scr refresh
                 rs_cross.tStopRefresh = tThisFlipGlobal  # on global time
@@ -499,7 +499,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     if routineForceEnded:
         routineTimer.reset()
     else:
-        routineTimer.addTime(-630.000000)
+        routineTimer.addTime(-610.000000)
     thisExp.nextEntry()
 
     # mark experiment as finished

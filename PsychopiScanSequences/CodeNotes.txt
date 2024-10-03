@@ -22,36 +22,36 @@ TODO: Currently testing EEG With 32-channel workspace. Need to change to 64-chan
 3_RestingState1.py:  (based on 3_RestingState1.psyexp)
 	Fixation cross (start -> 1 ;   end -> 2)
 	Study Protocol: 480s tasktime (8 min)
-	Psychopy duration:  630s (showing fixation cross entire duration - 30s initial buffer + 480s tasktime + 120s end buffer)
-	Order - StartPsychopy -> Within 30s start Scanner -> End scanner after 8min -> PressEscToEndPsychopy
+	Psychopy duration:  610s (showing fixation cross entire duration - 10s initial buffer + 480s tasktime + 120s end buffer)
+	Order - StartPsychopy -> Within 10s start Scanner -> End scanner after 8min -> PressEscToEndPsychopy
 
 4_AversiveVisualStimuliTask.py (based on 4_AversiveVisualStimuliTask.psyexp)
 	Valence Image (start -> 3 ; end -> 4)
 	Fixation cross (start -> 5;  end -> 6)
 	Study Protocol: 480s tasktime (8 min)
-	Psychopy duration: 630s  (30s initial buffer (blank) + 480s tasktime (images/cross)+ 120s end buffer(blank))
-    Order - StartPsychopy -> Within 30s start Scanner -> End scanner after task images end and blank screen shows up -> PressEscToEndPsychopy
+	Psychopy duration: 610s  (10s initial buffer (blank) + 480s tasktime (images/cross)+ 120s end buffer(blank))
+    Order - StartPsychopy -> Within 10s start Scanner -> End scanner after task images end and blank screen shows up -> PressEscToEndPsychopy
 
 5_RestingState2.py  (based on 3_RestingState1.psyexp)
 	Fixation cross (start -> 7 ; end -> 8)
 	Study Protocol: 480s tasktime (8 min)
-	Psychopy duration:  630s (showing fixation cross entire duration - 30s initial buffer + 480s tasktime + 120s end buffer)
-    Order - StartPsychopy -> Within 30s start Scanner -> End scanner after 8min -> PressEscToEndPsychopy
+	Psychopy duration:  610s (showing fixation cross entire duration - 10s initial buffer + 480s tasktime + 120s end buffer)
+    Order - StartPsychopy -> Within 10s start Scanner -> End scanner after 8min -> PressEscToEndPsychopy
 
 
 6_SlowBreathingSYMTask.py (based on 6_SlowBreathingSYMTask.psyexp)
 	SYM Video     (start -> 9 ; end -> 10)
 	Breathing Image (start -> 11 ; end -> 12)
 	Study Protocol: 420s tasktime (7 min)
-	Psychopy duration:  570s (30s initial buffer (blank) + 242s video + 178s slow breathing image + 120s end buffer (blank))
-    Order - StartPsychopy -> Within 30s start Scanner -> End scanner task ends and blank screen shows up -> PressEscToEndPsychopy
+	Psychopy duration:  550s (10s initial buffer (blank) + 242s video + 178s slow breathing image + 120s end buffer (blank))
+    Order - StartPsychopy -> Within 10s start Scanner -> End scanner task ends and blank screen shows up -> PressEscToEndPsychopy
 
 
 7_MeditativeThoughtlessEyesClosedState.py (based on 3_RestingState1.psyexp)
 	Meditation Mesg Image (start -> 13 ; end -> 14)
 	Study Protocol: 480s tasktime (8 min)
-	Duration:  630s (showing meditation image entire duration - 30s initial buffer + 480s tasktime + 120s end buffer)
-    Order - StartPsychopy -> Within 30s start Scanner -> End scanner after 8 minutes -> PressEscToEndPsychopy
+	Duration:  610s (showing meditation image entire duration - 10s initial buffer + 480s tasktime + 120s end buffer)
+    Order - StartPsychopy -> Within 10s start Scanner -> End scanner after 8 minutes -> PressEscToEndPsychopy
 
 ##################### Manual Code Changes #############
 After generating python code from Psychopy.. need to make the following code additions manually

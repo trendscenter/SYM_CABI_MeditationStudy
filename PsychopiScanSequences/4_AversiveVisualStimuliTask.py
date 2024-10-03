@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Fri Sep 20 12:53:29 2024
+    on Wed Oct  2 23:41:56 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019)
@@ -514,7 +514,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
 
     # --- Run Routine "dummy_start_buffer_1" ---
     routineForceEnded = not continueRoutine
-    while continueRoutine and routineTimer.getTime() < 30.0:
+    while continueRoutine and routineTimer.getTime() < 10.0:
         # get current time
         t = routineTimer.getTime()
         tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -545,7 +545,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # if text is stopping this frame...
         if text.status == STARTED:
             # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > text.tStartRefresh + 30 - frameTolerance:
+            if tThisFlipGlobal > text.tStartRefresh + 10 - frameTolerance:
                 # keep track of stop time/frame for later
                 text.tStop = t  # not accounting for scr refresh
                 text.tStopRefresh = tThisFlipGlobal  # on global time
@@ -586,7 +586,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     if routineForceEnded:
         routineTimer.reset()
     else:
-        routineTimer.addTime(-30.000000)
+        routineTimer.addTime(-10.000000)
     thisExp.nextEntry()
 
     # set up handler to look after randomisation of conditions etc
