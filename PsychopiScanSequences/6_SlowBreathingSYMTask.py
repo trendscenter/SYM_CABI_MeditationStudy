@@ -375,7 +375,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # --- Initialize components for Routine "slow_breathing_video" ---
     breathing_video = visual.MovieStim(
         win, name='breathing_video',
-        filename='./videos/SYM_BreathingVideoEdited_subtitles.mp4', movieLib='ffpyplayer',
+        filename='./videos/SYM_BreathingVideoEdited_subtitles_banner.mp4', movieLib='ffpyplayer',
         loop=False, volume=1.0, noAudio=False,
         pos=(0, 0), size=(1.6, 1), units=win.units,
         ori=0.0, anchor='center', opacity=None, contrast=1.0,

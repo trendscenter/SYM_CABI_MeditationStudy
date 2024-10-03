@@ -165,7 +165,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="False" valType="bool" updates="constant" name="forceEndRoutine"/>
         <Param val="False" valType="bool" updates="None" name="loop"/>
-        <Param val="./videos/SYM_BreathingVideoEdited_subtitles.mp4" valType="file" updates="constant" name="movie"/>
+        <Param val="./videos/SYM_BreathingVideoEdited_subtitles_banner.mp4" valType="file" updates="constant" name="movie"/>
         <Param val="breathing_video" valType="code" updates="None" name="name"/>
         <Param val="" valType="num" updates="constant" name="opacity"/>
         <Param val="0" valType="num" updates="constant" name="ori"/>
