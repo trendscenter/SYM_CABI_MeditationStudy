@@ -62,8 +62,12 @@ After generating python code from Psychopy.. need to make the following code add
 2. Inside main() : after run() method
     hf.eeg_at_close(port, outlet, rcs, rcs_recording_flag)
 
-3. Search for 'if expInfo is not None' and place the following line just above the if statement
-    win._monitorFrameRate = hf.PSYCHOPY_EXP_DEFAULT_FRAMERATE
+3. Search for 'if expInfo is not None' and
+    a) place the following line just above the if statement
+       win._monitorFrameRate = hf.PSYCHOPY_EXP_DEFAULT_FRAMERATE
+    b) place the following line after the if block
+       print(f'Current frameRate: {expInfo["frameRate"]}')
+
 
 4. Inside main() : inside endExperiment() lastline (May not be needed.. just recheck after connecting with RCS Server)
     hf.eeg_at_close(port, outlet, rcs, rcs_recording_flag)

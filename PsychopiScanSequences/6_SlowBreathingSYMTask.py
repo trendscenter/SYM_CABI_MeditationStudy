@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Thu Oct  3 00:30:41 2024
+    on Fri Oct 11 12:39:45 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019)
@@ -367,7 +367,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     text = visual.TextStim(win=win, name='text',
                            text=None,
                            font='Arial',
-                           pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0,
+                           pos=(0, 0), height=0.8, wrapWidth=None, ori=0.0,
                            color='white', colorSpace='rgb', opacity=None,
                            languageStyle='LTR',
                            depth=0.0);
@@ -490,6 +490,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # update status
                 text.status = FINISHED
                 text.setAutoDraw(False)
+        # Run 'Each Frame' code from code_3
+        text.text = 10 - int(t)
 
         # check for quit (typically the Esc key)
         if defaultKeyboard.getKeys(keyList=["escape"]):
