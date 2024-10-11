@@ -193,7 +193,7 @@ def setupWindow(expInfo=None, win=None):
         win = visual.Window(
             size=_winSize, fullscr=_fullScr, screen=0,
             winType='pyglet', allowStencil=False,
-            monitor='testMonitor', color=[0, 0, 0], colorSpace='rgb',
+            monitor='testMonitor', color=[-1, -1, -1], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
             blendMode='avg', useFBO=True,
             units='height',
@@ -201,7 +201,7 @@ def setupWindow(expInfo=None, win=None):
         )
     else:
         # if we have a window, just set the attributes which are safe to set
-        win.color = [0, 0, 0]
+        win.color = [-1, -1, -1]
         win.colorSpace = 'rgb'
         win.backgroundImage = ''
         win.backgroundFit = 'none'
