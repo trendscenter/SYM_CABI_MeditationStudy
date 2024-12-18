@@ -367,8 +367,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     rs_cross = visual.ImageStim(
         win=win,
         name='rs_cross',
-        image='./images/fixation_cross.png', mask=None, anchor='center',
-        ori=0.0, pos=(0, 0), size=(1, 1),
+        image='./images/RestingStateEyesClosed.png', mask=None, anchor='center',
+        ori=0.0, pos=(0, 0), size=(1.6, 1),
         color=[1, 1, 1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
