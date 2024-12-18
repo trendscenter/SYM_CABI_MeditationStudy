@@ -20,7 +20,7 @@ Base psychopy file for each python script along with the task trigger values.
 TODO: Currently testing EEG With 32-channel workspace. Need to change to 64-channel EEG Workspace during actual experiments.
 
 3_RestingState1.py:  (based on 3_RestingState1.psyexp)
-	Fixation cross (start -> 1 ;   end -> 2)
+	RestingStateEyesClosed Image (start -> 1 ;   end -> 2)
 	Study Protocol: 480s tasktime (8 min)
 	Psychopy duration:  610s (showing fixation cross entire duration - 10s initial buffer + 480s tasktime + 120s end buffer)
 	Order - StartPsychopy -> Within 10s start Scanner -> End scanner after 8min -> PressEscToEndPsychopy
@@ -33,7 +33,7 @@ TODO: Currently testing EEG With 32-channel workspace. Need to change to 64-chan
     Order - StartPsychopy -> Within 10s start Scanner -> End scanner after task images end and blank screen shows up -> PressEscToEndPsychopy
 
 5_RestingState2.py  (based on 3_RestingState1.psyexp)
-	Fixation cross (start -> 7 ; end -> 8)
+	RestingStateEyesClosed Image (start -> 7 ; end -> 8)
 	Study Protocol: 480s tasktime (8 min)
 	Psychopy duration:  610s (showing fixation cross entire duration - 10s initial buffer + 480s tasktime + 120s end buffer)
     Order - StartPsychopy -> Within 10s start Scanner -> End scanner after 8min -> PressEscToEndPsychopy
