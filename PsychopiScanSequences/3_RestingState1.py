@@ -587,7 +587,7 @@ if __name__ == '__main__':
     win = setupWindow(expInfo=expInfo)
     setupDevices(expInfo=expInfo, thisExp=thisExp, win=win)
 
-    port, outlet, rcs, rcs_recording_flag = hf.eeg_setup(expName, expInfo.get('participant'))
+    port, outlet, rcs, rcs_recording_flag = hf.eeg_setup(expName, expInfo.get('participant')+'_'+expInfo.get('session'))
 
     run(
         expInfo=expInfo,
