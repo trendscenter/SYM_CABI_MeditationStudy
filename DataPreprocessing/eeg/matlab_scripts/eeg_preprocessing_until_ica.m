@@ -16,8 +16,6 @@ runtype='server' %or could be 'server'
 
 if strcmp(runtype,'local')
     base_dir='/Users/sbasodi1/GSU Dropbox Dropbox/Sunitha Basodi (sbasodi1)/snt_mac/workplace/sym_cabi/SYM_CABI_MeditationStudy/DataPreprocessing/'
-    base_data_dir = fullfile(fileparts(myPath), 'data');
-
     working_dir= [base_dir 'matlab_scripts/']
     % add path of the EEGLAB - add only the roor dir to the addpath, not with subdirectories
     addpath('/Users/sbasodi1/Documents/MATLAB/CustomToolBoxes/eeglab2025.0.0');
@@ -34,8 +32,6 @@ if strcmp(runtype,'local')
     % find . -iname "*.mexmaca64" -exec xattr -d com.apple.quarantine {} \;
 elseif strcmp(runtype,'server')
     base_dir='/data/users3/sbasodi1/workplace/sy_meditation/eeg_preprocessing/';
-    base_data_dir = fullfile(base_dir, 'data');
-
 
     %TODO:
     working_dir=[base_dir 'matlab_scripts/'];
@@ -107,6 +103,7 @@ else
    error('Error. \n runtype must be ''local'' or ''server''.')
 end
 
+base_data_dir = fullfile(fileparts(myPath), 'data');
 raw_data_dir = fullfile(base_data_dir, 'raw_all');
 output_preprocessed_dir = fullfile(base_data_dir, 'preprocessed_eeg');
 %create output dir
@@ -121,7 +118,7 @@ fprintf(log_file_id, '%s: %s\n', datestr(now, 'yyyy-mm-dd HH:MM:SS'),'Started EE
 
 %EEG file types
 EEG_FILENAME_MAPPING = containers.Map({'6_SlowBreathingSYMTask', 'CABI_SYM_AversiveVisualStimuliTask', 'SYM_CABI_MeditativeState', 'SYM_CABI_RSfMRI_1', 'SYM_CABI_RSfMRI_2'}, ...
-    {'4-SlowBreathingSYMTask', '2-AversiveVisualStimuliTask', '5-MeditativeState','1-RSfMRI_1', '3-RSfMRI_2'});
+    {'4-SlowBreathingSYMTask', '2-A versiveVisualStimuliTask', '5-MeditativeState','1-RSfMRI_1', '3-RSfMRI_1'});
 
 
 num_channels_in_cap=64;
