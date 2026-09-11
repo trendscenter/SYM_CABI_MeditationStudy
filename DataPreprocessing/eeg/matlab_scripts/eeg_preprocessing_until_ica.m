@@ -8,15 +8,15 @@ function eeg_preprocess(SUBJECT_IDS)
 
 
 %To run on server; try
-% matlab -batch "eeg_preprocess" OR
-% matlab -nodesktop -nosplash -r "run('eeg_preprocess.m'); quit;"
+% matlab -batch "eeg_preprocessing_until_ica" OR
+% matlab -nodesktop -nosplash -r "run('eeg_preprocessing_until_ica.m'); quit;"
 
 runtype='local' %or could be 'server'
 runtype='server' %or could be 'server'
 
 if strcmp(runtype,'local')
     base_dir='/Users/sbasodi1/GSU Dropbox Dropbox/Sunitha Basodi (sbasodi1)/snt_mac/workplace/sym_cabi/SYM_CABI_MeditationStudy/DataPreprocessing/'
-    working_dir= [base_dir 'matlab_scripts/']
+    working_dir= [base_dir 'eeg/matlab_scripts/']
     % add path of the EEGLAB - add only the roor dir to the addpath, not with subdirectories
     addpath('/Users/sbasodi1/Documents/MATLAB/CustomToolBoxes/eeglab2025.0.0');
 
@@ -34,7 +34,7 @@ elseif strcmp(runtype,'server')
     base_dir='/data/users3/sbasodi1/workplace/sy_meditation/eeg_preprocessing/';
 
     %TODO:
-    working_dir=[base_dir 'matlab_scripts/'];
+    working_dir=[base_dir 'eeg/matlab_scripts/'];
 
     addpath('/data/users3/sbasodi1/workplace/sy_meditation/eeg_preprocessing/softwares/eeglab2025.0.0');
     %addpath(genpath('/trdapps/linux-x86_64/matlab/toolboxes/GroupICATv4.0c'));

@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=SYM_EEG_preprocess
-#SBATCH --output=../data/preprocessed_eeg/new_logs/SYM_eeg_out_%A_%a.log
-#SBATCH --error=../data/preprocessed_eeg/new_logs/logs/SYM_eeg_err_%A_%a.err
+#SBATCH --output=../../data/preprocessed_eeg/new_logs/SYM_eeg_out_%A_%a.log
+#SBATCH --error=../../data/preprocessed_eeg/new_logs/logs/SYM_eeg_err_%A_%a.err
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=6          # MATLAB uses multithreading for FFTs
